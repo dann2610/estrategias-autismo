@@ -1,0 +1,36 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}Aprende sobre el autismo{% endblock %}
+{% block content %}
+{% include "partials/page_head.html" with area="1" heading="Aprende sobre el autismo" image="img/fotos/nino-corazon.jpg" image_alt="Un niño sonriente sostiene un corazón de piezas de colores." intro="Cápsulas para leer en pocos minutos. Cada una explica un tema con ejemplos cotidianos, termina con actividades y materiales para llevarlo a la práctica e indica sus fuentes." %}
+<div class="container py-4">
+  <div class="section-head"><div><h2 class="h4 mb-1">Temas</h2><p>Te sugerimos leerlos en orden. Cada uno tiene ejemplos, actividades relacionadas y fuentes.</p></div></div>
+  <div class="row g-3 mb-4">
+    {% for c in capsules %}
+    <div class="col-md-6 col-lg-4">
+      <article class="topic-card area-1">
+        <div class="topic-img"><img src="{% foto_tema c.theme %}" alt="" loading="lazy" width="600" height="380"><span class="topic-num" aria-hidden="true">{{ forloop.counter }}</span></div>
+        <div class="topic-body">
+          <span class="chip chip-area">{{ c.get_theme_display }}</span>
+          <h3><a href="{{ c.get_absolute_url }}">{{ c.title }}</a></h3>
+          <p>{{ c.description|truncatewords:22 }}</p>
+          <span class="read-more" aria-hidden="true">Leer más <i class="bi bi-arrow-right"></i></span>
+        </div>
+      </article>
+    </div>
+    {% empty %}<div class="col-12"><div class="empty">Aún no hay cápsulas publicadas.</div></div>{% endfor %}
+  </div>
+  <div class="row g-4">
+    <div class="col-lg-7">
+      <div class="side area-1">
+        <h2 class="h5">Cómo está hecha cada cápsula</h2>
+        <p class="small text-soft">Todas siguen la misma estructura para que sea fácil encontrar lo que buscas:</p>
+        <ol class="small mb-3 cols-2"><li>Introducción</li><li>Explicación del tema</li><li>Por qué es importante</li><li>Ejemplos cotidianos</li><li>Material visual</li><li>De la explicación a la práctica</li><li>Recomendaciones y precauciones</li><li>Fuentes y fecha de revisión</li></ol>
+        <a class="btn btn-soft btn-sm" href="{% url 'core:sources' %}">Ver todas las fuentes</a>
+      </div>
+    </div>
+    <aside class="col-lg-5">
+      <div class="callout info small">Ninguna cápsula sirve para diagnosticar. Si algo te preocupa, consulta <a href="{% url 'directory:index' %}">dónde buscar orientación</a> o lee las <a href="{% url 'learn:faq' %}">preguntas frecuentes</a>.</div>
+    </aside>
+  </div>
+</div>
+{% endblock %}

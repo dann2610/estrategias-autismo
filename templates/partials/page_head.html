@@ -1,0 +1,14 @@
+{# Variables: area (1,2,3), area_label, area_url, heading, intro, picto, image (ruta en static), image_alt #}
+{% load static ui %}
+<section class="page-head area-{{ area }}{% if image %} has-image{% endif %}">
+  <div class="container">
+    <div class="page-head-grid">
+      <div>
+        {% if area_label %}<a class="area-tag" href="{{ area_url }}">{% if picto %}<img class="picto" src="{% picto picto %}" alt="">{% endif %}{{ area_label }}</a>{% endif %}
+        <h1 class="mb-2">{{ heading }}</h1>
+        {% if intro %}<p class="lead mb-0">{{ intro }}</p>{% endif %}
+      </div>
+      {% if image %}<img class="page-head-img" src="{% static image %}" alt="{{ image_alt|default:'' }}" width="800" height="520">{% endif %}
+    </div>
+  </div>
+</section>

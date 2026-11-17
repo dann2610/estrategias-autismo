@@ -1,0 +1,2 @@
+{% extends "base.html" %}{% block title %}Demasiados intentos{% endblock %}
+{% block content %}<div class="container py-5 text-center"><h1>Hiciste muchos intentos seguidos</h1><p class="lead">Por seguridad, espera unos minutos y vuelve a intentarlo.</p><a class="btn btn-primary" href="{% url 'core:home' %}">Volver al inicio</a></div>{% endblock %}

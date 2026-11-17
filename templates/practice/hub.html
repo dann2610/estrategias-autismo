@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}Actividades y recursos{% endblock %}
+{% block content %}
+{% include "partials/page_head.html" with area="2" heading="Herramientas y recursos" image="img/fotos/nino-mesa-bloques.jpg" image_alt="Un niño construye una torre de bloques sobre una mesa." intro="Apoyos visuales, agendas, juegos y adaptaciones para aplicar en casa y en el aula, según las necesidades de cada niña o niño. Cada recurso enlaza con la explicación que lo fundamenta." %}
+<div class="container py-4 area-2">
+  <div class="row g-3 mb-4">
+    <div class="col-md-6 col-lg-3"><article class="card-x"><span class="kicker"><img class="picto" src="{% picto '1f5d3' %}" alt="">Herramienta</span><h3><a href="{% url 'practice:agenda' %}">Crear una agenda visual</a></h3><p>Elige pictogramas, ordénalos y guárdala como PDF.</p></article></div>
+    <div class="col-md-6 col-lg-3"><article class="card-x"><span class="kicker"><img class="picto" src="{% picto '1f4cb' %}" alt="">Imprimibles</span><h3><a href="{% url 'practice:materials' %}">Apoyos visuales para imprimir</a></h3><p>Agendas, secuencias, tarjetas de emociones y tableros.</p></article></div>
+    <div class="col-md-6 col-lg-3"><article class="card-x"><span class="kicker"><img class="picto" src="{% picto '1f600' %}" alt="">Banco</span><h3><a href="{% url 'practice:pictograms' %}">Pictogramas</a></h3><p>Imágenes sencillas para rutinas, emociones y pedidos.</p></article></div>
+    <div class="col-md-6 col-lg-3"><article class="card-x"><span class="kicker"><img class="picto" src="{% picto '1f4fa' %}" alt="">Videos</span><h3><a href="{% url 'practice:videos' %}">Videos educativos seleccionados</a></h3><p>De fuentes oficiales, revisados por el equipo.</p></article></div>
+  </div>
+  <div class="section-head"><div><h2 class="mb-1">Actividades</h2><p>Cada una indica objetivo, materiales, pasos, edad, adaptaciones y precauciones.</p></div><a class="btn btn-soft btn-sm" href="{% url 'practice:activities' %}">Ver y filtrar todas</a></div>
+  <div class="d-flex flex-wrap gap-2 mb-3">{% for v, l in kinds %}<a class="btn btn-soft btn-sm" href="{% url 'practice:activities' %}?tipo={{ v }}">{{ l }}</a>{% endfor %}</div>
+  <div class="row g-3">{% for obj in activities %}<div class="col-md-6 col-lg-4">{% include "partials/card.html" %}</div>{% empty %}<div class="col-12"><div class="empty">Aún no hay actividades publicadas.</div></div>{% endfor %}</div>
+  <div class="callout mt-4 small">Las actividades y los materiales son apoyos educativos. No son tratamientos clínicos ni garantizan resultados; adáptalos a cada niña o niño y consulta a profesionales cuando sea necesario.</div>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}{{ obj.title }}{% endblock %}
+{% block content %}
+{% url 'exchange:index' as list_url %}
+{% include "partials/page_head.html" with area="3" area_label="Intercambio de materiales" area_url=list_url picto="1f4e6" heading=obj.title intro=obj.get_offer_display %}
+<div class="container py-4 area-3">
+  <div class="row g-4">
+    <article class="col-lg-8"><div class="capsule-body">
+      <p>{{ obj.description|linebreaksbr }}</p>
+      <div class="callout mt-3"><h2 class="h6 mt-0">Reglas de seguridad</h2><ul class="mb-0 small"><li>Coordina la entrega en un lugar público y de día.</li><li>No compartas tu domicilio ni documentos personales.</li><li>Nunca pagues por adelantado.</li><li>Si algo te parece sospechoso, repórtalo.</li></ul><a class="small" href="{% url 'exchange:rules' %}">Todas las reglas</a></div>
+      {% if is_owner %}<form method="post" action="{% url 'exchange:availability' obj.pk %}" class="mt-4 d-flex flex-wrap gap-2 align-items-end">{% csrf_token %}<div><label class="form-label" for="availability">Disponibilidad de tu publicación</label><select class="form-select" id="availability" name="availability">{% for v, l in availabilities %}<option value="{{ v }}" {% if obj.availability == v %}selected{% endif %}>{{ l }}</option>{% endfor %}</select></div><button class="btn btn-area">Actualizar</button></form>{% endif %}
+    </div></article>
+    <aside class="col-lg-4"><div class="side area-3"><dl class="facts"><dt>Disponibilidad</dt><dd>{{ obj.get_availability_display }}</dd><dt>Material</dt><dd>{{ obj.get_item_kind_display }}</dd><dt>Estado</dt><dd>{{ obj.get_condition_display }}</dd><dt>Zona</dt><dd>{{ obj.canton }}, {{ obj.province }}</dd>{% if obj.delivery_terms %}<dt>Entrega</dt><dd>{{ obj.delivery_terms }}</dd>{% endif %}<dt>Contacto</dt><dd>{% if obj.availability == 'finalizado' %}Publicación finalizada{% elif user.is_authenticated %}{{ obj.contact_authorized }}{% else %}<a href="{% url 'accounts:login' %}?next={{ request.path }}">Ingresa para ver el contacto</a>{% endif %}</dd></dl>{% include "partials/detail_actions.html" %}</div></aside>
+  </div>
+</div>
+{% endblock %}

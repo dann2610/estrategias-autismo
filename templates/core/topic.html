@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}{{ topic.name }}{% endblock %}
+{% block content %}
+{% include "partials/page_head.html" with area="1" heading=topic.name intro=topic.description picto=topic.pictogram %}
+<div class="container py-4">
+  {% if capsules %}<h2 class="h4">Para comprender</h2><div class="row g-3 mb-4">{% for obj in capsules %}<div class="col-md-6 col-lg-4">{% include "partials/card.html" %}</div>{% endfor %}</div>{% endif %}
+  {% if activities or materials %}<h2 class="h4">Para practicar</h2><div class="row g-3 mb-4">{% for obj in activities %}<div class="col-md-6 col-lg-4">{% include "partials/card.html" %}</div>{% endfor %}{% for obj in materials %}<div class="col-md-6 col-lg-4">{% include "partials/card.html" %}</div>{% endfor %}</div>{% endif %}
+  {% if videos or interviews or institutions %}<h2 class="h4">Para ampliar y buscar apoyo</h2><div class="row g-3 mb-4">{% for obj in videos %}<div class="col-md-6 col-lg-4">{% include "partials/card.html" %}</div>{% endfor %}{% for obj in interviews %}<div class="col-md-6 col-lg-4">{% include "partials/card.html" %}</div>{% endfor %}{% for obj in institutions %}<div class="col-md-6 col-lg-4">{% include "partials/card.html" %}</div>{% endfor %}</div>{% endif %}
+  {% if sources %}<h2 class="h4">Fuentes de este tema</h2><ul class="refs">{% for s in sources %}<li>{{ s.citation }}{% if s.url %} <a href="{{ s.url }}" target="_blank" rel="noopener noreferrer">{{ s.url }}</a>{% endif %}</li>{% endfor %}</ul>{% endif %}
+  {% if not capsules and not activities and not materials %}<div class="empty"><p class="mb-0">Todavía no hay contenido publicado en este tema.</p></div>{% endif %}
+</div>
+{% endblock %}

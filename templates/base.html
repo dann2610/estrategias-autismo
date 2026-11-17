@@ -1,0 +1,87 @@
+{% load static ui %}<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Inicio{% endblock %} · Estrategias de apoyo en el autismo</title>
+  <meta name="description" content="{% block description %}{{ SITE_TAGLINE }}{% endblock %}">
+  <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'vendor/fonts/fonts.css' %}">
+  <link rel="stylesheet" href="{% static 'vendor/bootstrap/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'vendor/bootstrap-icons/bootstrap-icons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+{% block header %}
+{% with ns=request.resolver_match.namespace %}
+<header class="site-header">
+  <nav class="navbar navbar-expand-xl container py-2" aria-label="Navegación principal">
+    <a class="brand" href="{% url 'core:home' %}">
+      <img src="{% static 'img/marca.svg' %}" alt="" width="58" height="29">
+      <span class="brand-name">Estrategias de apoyo<small>en el autismo</small></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Abrir menú">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav mx-auto mainnav gap-xl-1">
+        <li class="nav-item"><a class="nav-link a1 {% if ns == 'learn' %}active{% endif %}" href="{% url 'learn:index' %}" {% if ns == 'learn' %}aria-current="page"{% endif %}>Aprende sobre el autismo</a></li>
+        <li class="nav-item"><a class="nav-link a2 {% if ns == 'practice' %}active{% endif %}" href="{% url 'practice:hub' %}" {% if ns == 'practice' %}aria-current="page"{% endif %}>Herramientas y recursos</a></li>
+        <li class="nav-item"><a class="nav-link a3 {% if ns == 'directory' or ns == 'interviews' or ns == 'exchange' or request.resolver_match.url_name == 'orientation' %}active{% endif %}" href="{% url 'core:orientation' %}">Orientación y comunidad</a></li>
+      </ul>
+      <div class="d-flex align-items-center gap-2 flex-wrap py-2 py-xl-0">
+        <a class="btn btn-soft btn-sm" href="{% url 'core:search' %}"><i class="bi bi-search" aria-hidden="true"></i> <span class="search-label">Buscar</span></a>
+        {% if user.is_authenticated %}
+          <a class="nav-link bell px-2" href="{% url 'notifications:inbox' %}" aria-label="Notificaciones{% if unread_notifications %}: {{ unread_notifications }} sin leer{% endif %}"><i class="bi bi-bell fs-5" aria-hidden="true"></i>{% if unread_notifications %}<span class="count">{{ unread_notifications }}</span>{% endif %}</a>
+          <div class="dropdown">
+            <button class="btn btn-soft btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Mi cuenta</button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><span class="dropdown-item-text small text-soft">{{ user.public_name }}</span></li>
+              <li><a class="dropdown-item" href="{% url 'accounts:panel' %}">Resumen</a></li>
+              <li><a class="dropdown-item" href="{% url 'accounts:favorites' %}">Favoritos</a></li>
+              <li><a class="dropdown-item" href="{% url 'contributions:mine' %}">Mis aportes</a></li>
+              <li><a class="dropdown-item" href="{% url 'contributions:index' %}">Participar</a></li>
+              {% if user_is_moderator %}<li><hr class="dropdown-divider"></li><li><a class="dropdown-item" href="{% url 'dashboard:home' %}">Panel de administración</a></li>{% endif %}
+              <li><hr class="dropdown-divider"></li>
+              <li><form method="post" action="{% url 'accounts:logout' %}">{% csrf_token %}<button class="dropdown-item" type="submit">Cerrar sesión</button></form></li>
+            </ul>
+          </div>
+        {% else %}
+          <a class="btn btn-soft btn-sm" href="{% url 'accounts:login' %}">Ingresar</a>
+          <a class="btn btn-primary btn-sm" href="{% url 'accounts:signup' %}">Crear cuenta</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+</header>
+{% endwith %}
+{% if site_config.notice %}<div class="callout rounded-0 text-center py-2" role="status">{{ site_config.notice }}</div>{% endif %}
+{% endblock %}
+
+<main id="contenido" tabindex="-1">
+  {% include "partials/messages.html" %}
+  {% block content %}{% endblock %}
+</main>
+
+{% block footer %}
+<footer class="site-footer">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-5">
+        <div class="d-flex align-items-center gap-2 mb-2"><img src="{% static 'img/marca.svg' %}" alt="" width="52" height="26"><strong class="fs-5 text-white">Estrategias de apoyo en el autismo</strong></div>
+        <p class="small">{{ SITE_TAGLINE }}. Proyecto de comunicación de la Universidad Estatal de Milagro.</p>
+        <p class="small mb-0">El contenido es educativo y orientativo. No es un diagnóstico ni un tratamiento y no reemplaza la evaluación de profesionales.</p>
+      </div>
+      <div class="col-6 col-lg-2"><h2>Áreas</h2><ul class="small"><li><a href="{% url 'learn:index' %}">Aprende sobre el autismo</a></li><li><a href="{% url 'practice:hub' %}">Herramientas y recursos</a></li><li><a href="{% url 'core:orientation' %}">Orientación y comunidad</a></li></ul></div>
+      <div class="col-6 col-lg-2"><h2>Proyecto</h2><ul class="small"><li><a href="{% url 'core:about' %}">Sobre el proyecto</a></li><li><a href="{% url 'core:sources' %}">Fuentes</a></li><li><a href="{% url 'core:credits' %}">Créditos y licencias</a></li><li><a href="{% url 'reports:create' %}">Reportar un problema</a></li></ul></div>
+      <div class="col-6 col-lg-3"><h2>Información legal</h2><ul class="small"><li><a href="{% url 'core:privacy' %}">Privacidad</a></li><li><a href="{% url 'core:accessibility' %}">Accesibilidad</a></li><li><a href="{% url 'core:terms' %}">Términos de uso</a></li><li><a href="{% url 'core:rules' %}">Normas de convivencia</a></li>{% if site_config.contact_email %}<li><a href="mailto:{{ site_config.contact_email }}">Contacto</a></li>{% endif %}</ul></div>
+    </div>
+  </div>
+</footer>
+{% endblock %}
+<script src="{% static 'vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/app.js' %}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,29 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}{{ obj.title }}{% endblock %}
+{% block content %}
+{% url 'practice:materials' as list_url %}
+{% include "partials/page_head.html" with area="2" area_label="Apoyos visuales y materiales" area_url=list_url picto="1f4cb" heading=obj.title intro=obj.description %}
+<div class="container py-4 area-2">
+  <div class="row g-4">
+    <article class="col-lg-8"><div class="capsule-body">
+      {% if items %}<div class="picto-grid mb-3">{% for it in items %}<div class="picto-card"><img src="{{ it.pictogram.src }}" alt="">{{ it.text }}</div>{% endfor %}</div>{% endif %}
+      {% if prompts %}<h2>Qué incluye la ficha</h2><ul>{% for p in prompts %}<li>{{ p }}</li>{% endfor %}</ul>{% endif %}
+      <div class="d-flex flex-wrap gap-2 my-3">
+        {% if obj.is_printable %}<a class="btn btn-area" href="{% url 'practice:material_print' obj.pk %}"><i class="bi bi-printer" aria-hidden="true"></i> Abrir versión para imprimir</a>{% endif %}
+        {% if obj.file %}<a class="btn btn-area" href="{% file_url obj 'file' %}"><i class="bi bi-download" aria-hidden="true"></i> Descargar archivo</a>{% endif %}
+        {% if obj.external_url %}<a class="btn btn-soft" href="{{ obj.external_url }}" target="_blank" rel="noopener noreferrer nofollow">Abrir sitio externo</a>{% endif %}
+      </div>
+      <h2>Cómo usarlo</h2><ol class="steps">{% for x in obj.how_to_use|lines %}<li>{{ x }}</li>{% endfor %}</ol>
+      {% if activities or capsules %}<section class="bridge"><h2>Relacionado</h2><div class="bridge-grid">
+        {% for a in activities %}<a class="bridge-item" href="{{ a.get_absolute_url }}"><img src="{% picto '1f3a8' %}" alt=""><span><strong>{{ a.title }}</strong><span>Actividad</span></span></a>{% endfor %}
+        {% for c in capsules %}<a class="bridge-item" href="{{ c.get_absolute_url }}"><img src="{% picto '1f4a1' %}" alt=""><span><strong>{{ c.title }}</strong><span>Cápsula educativa</span></span></a>{% endfor %}
+      </div></section>{% endif %}
+    </div></article>
+    <aside class="col-lg-4"><div class="side area-2">
+      <dl class="facts"><dt>Tipo</dt><dd>{{ obj.get_kind_display }}</dd><dt>Edad</dt><dd>{{ obj.get_age_range_display }}</dd><dt>Público</dt><dd>{{ obj.get_audience_display }}</dd>{% if obj.credit %}<dt>Créditos</dt><dd>{{ obj.credit }}</dd>{% endif %}{% if obj.license %}<dt>Licencia</dt><dd>{{ obj.license }}</dd>{% endif %}</dl>
+      {% if obj.origin == 'comunidad' %}<p class="chip origin-community mt-3 d-inline-block">Compartido por la comunidad</p>{% endif %}
+      {% include "partials/detail_actions.html" %}
+    </div></aside>
+  </div>
+</div>
+{% endblock %}

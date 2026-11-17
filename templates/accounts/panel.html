@@ -1,0 +1,36 @@
+{% extends "base.html" %}{% load ui %}{% block title %}Mi cuenta{% endblock %}
+{% block content %}
+{% include "partials/page_head.html" with area="3" heading="Hola, "|add:user.public_name intro="Desde aquí gestionas tus aportes, favoritos y notificaciones." %}
+<div class="container py-4">
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <div class="side mb-4">
+        <div class="section-head mb-2"><h2 class="h4 mb-0">Mis aportes</h2><a class="btn btn-primary btn-sm" href="{% url 'contributions:index' %}"><i class="bi bi-plus-lg" aria-hidden="true"></i> Participar</a></div>
+        {% if counts %}<div class="chips mb-3">{% for k, v in counts.items %}<span class="chip">{{ k }}: {{ v }}</span>{% endfor %}</div>{% endif %}
+        {% for obj in recent %}
+          <div class="d-flex justify-content-between align-items-center gap-2 py-2 border-bottom">
+            <a href="{% url 'contributions:summary' obj.model_key obj.pk %}">{{ obj.title }}</a>{{ obj|status_badge }}
+          </div>
+        {% empty %}<p class="text-soft mb-0">Todavía no has compartido nada.</p>{% endfor %}
+        {% if recent %}<a class="btn btn-soft btn-sm mt-3" href="{% url 'contributions:mine' %}">Ver todas</a>{% endif %}
+      </div>
+      <div class="side">
+        <h2 class="h4">Notificaciones recientes</h2>
+        {% for n in notifications %}<p class="mb-2 {% if not n.read %}fw-bold{% endif %}">{{ n.message }} <small class="text-soft">· {{ n.created_at|timesince }}</small></p>{% empty %}<p class="text-soft mb-0">Sin notificaciones.</p>{% endfor %}
+        <a class="btn btn-soft btn-sm mt-2" href="{% url 'notifications:inbox' %}">Ir a notificaciones</a>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="side mb-3"><h2 class="h5">Accesos</h2>
+        <div class="d-grid gap-2">
+          <a class="btn btn-soft" href="{% url 'accounts:favorites' %}"><i class="bi bi-bookmark-heart" aria-hidden="true"></i> Favoritos ({{ favorites_count }})</a>
+          <a class="btn btn-soft" href="{% url 'accounts:profile' %}"><i class="bi bi-person-gear" aria-hidden="true"></i> Editar perfil</a>
+          <a class="btn btn-soft" href="{% url 'accounts:password_change' %}"><i class="bi bi-key" aria-hidden="true"></i> Cambiar contraseña</a>
+          {% if user_is_moderator %}<a class="btn btn-primary" href="{% url 'dashboard:home' %}"><i class="bi bi-shield-check" aria-hidden="true"></i> Panel de administración</a>{% endif %}
+        </div>
+      </div>
+      <div class="callout coral small">Recuerda: no publiques nombres, fotos ni datos médicos de niñas y niños.</div>
+    </div>
+  </div>
+</div>
+{% endblock %}

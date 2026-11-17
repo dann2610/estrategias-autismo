@@ -1,0 +1,16 @@
+{% extends "dashboard/base_dash.html" %}{% load ui %}{% block title %}Publicaciones{% endblock %}
+{% block dash %}
+<h1 class="h2">Bandeja de revisión</h1>
+<form class="filters my-3" method="get"><div class="row g-2 align-items-end">
+  <div class="col-6 col-md"><label class="form-label" for="estado">Estado</label><select class="form-select form-select-sm" id="estado" name="estado"><option value="pendientes" {% if status == 'pendientes' %}selected{% endif %}>Pendientes y en revisión</option><option value="todos" {% if status == 'todos' %}selected{% endif %}>Todos</option>{% for v, l in statuses %}<option value="{{ v }}" {% if status == v %}selected{% endif %}>{{ l }}</option>{% endfor %}</select></div>
+  <div class="col-6 col-md"><label class="form-label" for="tipo">Categoría</label><select class="form-select form-select-sm" id="tipo" name="tipo"><option value="">Todas</option>{% for k, l in types %}<option value="{{ k }}" {% if model_key == k %}selected{% endif %}>{{ l }}</option>{% endfor %}</select></div>
+  <div class="col-6 col-md"><label class="form-label" for="autor">Autor (correo)</label><input class="form-control form-control-sm" id="autor" name="autor" value="{{ author }}"></div>
+  <div class="col-6 col-md"><label class="form-label" for="desde">Desde</label><input class="form-control form-control-sm" type="date" id="desde" name="desde" value="{{ since }}"></div>
+  <div class="col-auto"><button class="btn btn-primary btn-sm">Filtrar</button></div>
+</div></form>
+<div class="table-responsive"><table class="table align-middle"><thead><tr><th scope="col">Contribución</th><th scope="col">Tipo</th><th scope="col">Autor</th><th scope="col">Enviado</th><th scope="col">Estado</th><th scope="col"><span class="visually-hidden">Acción</span></th></tr></thead><tbody>
+{% for obj in page_obj %}<tr><td class="fw-bold">{{ obj.title|truncatechars:60 }}</td><td><small>{{ obj.TYPE_LABEL }}</small></td><td><small>{{ obj.author.email|default:"Equipo editorial" }}</small></td><td><small>{{ obj.submitted_at|default:obj.created_at|date:"d/m/Y H:i" }}</small></td><td>{{ obj|status_badge }}</td><td><a class="btn btn-primary btn-sm" href="{% url 'dashboard:review' obj.model_key obj.pk %}">Revisar</a></td></tr>
+{% empty %}<tr><td colspan="6" class="text-center text-soft py-4">No hay contribuciones con estos filtros.</td></tr>{% endfor %}
+</tbody></table></div>
+{% include "partials/pagination.html" %}
+{% endblock %}

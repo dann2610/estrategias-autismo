@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Actividades{% endblock %}
+{% block content %}
+{% url 'practice:hub' as hub %}
+{% include "partials/page_head.html" with area="2" area_label="Actividades y recursos" area_url=hub picto="1f3a8" heading="Actividades" image="img/fotos/aula-bloques.jpg" image_alt="Un niño juega con cubos en el aula mientras una docente lo anima." intro="Filtra por tipo, edad, lugar o duración. Todas incluyen adaptaciones y precauciones." %}
+<div class="container py-4 area-2">{% include "partials/filters.html" %}{% include "partials/grid.html" %}</div>
+{% endblock %}

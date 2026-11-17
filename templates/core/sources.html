@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Fuentes y referencias{% endblock %}
+{% block content %}
+{% include "partials/page_head.html" with area="1" heading="Fuentes y referencias" intro="Todas las fuentes que el proyecto consultó realmente, en formato APA 7, con su enlace oficial y la fecha de consulta." %}
+<div class="container py-4">
+  <nav class="d-flex flex-wrap gap-2 mb-3" aria-label="Filtrar por tipo de fuente"><a class="btn btn-sm {% if not current %}btn-primary{% else %}btn-soft{% endif %}" href="?">Todas</a>{% for v, l in kinds %}<a class="btn btn-sm {% if current == v %}btn-primary{% else %}btn-soft{% endif %}" href="?tipo={{ v }}">{{ l }}</a>{% endfor %}</nav>
+  {% if current == "legal" %}<div class="callout info mb-3 small">Las normas se citan con su denominación oficial y su publicación en el Registro Oficial. Antes de iniciar un trámite, confirma la vigencia en la fuente oficial.</div>{% endif %}
+  <ol class="refs">{% for s in sources %}<li id="fuente-{{ s.pk }}">{{ s.citation }}{% if s.url %} <a href="{{ s.url }}" target="_blank" rel="noopener noreferrer">{{ s.url }}</a>{% endif %}<br><span class="text-soft small">{{ s.get_kind_display }}. Consultada el {{ s.accessed_on|date:"d/m/Y" }}.{% if s.notes %} {{ s.notes }}{% endif %}</span></li>{% empty %}<li>No hay fuentes de este tipo.</li>{% endfor %}</ol>
+</div>
+{% endblock %}

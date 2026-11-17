@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}Orientación y comunidad{% endblock %}
+{% block content %}
+{% include "partials/page_head.html" with area="3" heading="Orientación y comunidad" image="img/fotos/manos-corazon.jpg" image_alt="Una mano entrega a otra un corazón hecho de piezas de colores." intro="Dónde buscar apoyo, voces de organizaciones que trabajan en el tema, recursos recomendados y un espacio para intercambiar materiales entre familias y docentes." %}
+<div class="container py-4 area-3">
+  <div class="row g-3">
+    <div class="col-md-6 col-lg-4"><article class="card-x"><span class="kicker"><img class="picto" src="{% picto '1f3db' %}" alt="">Directorio</span><h3><a href="{% url 'directory:index' %}">Instituciones y servicios de apoyo</a></h3><p>{{ institutions_count }} registro{{ institutions_count|pluralize }} con fuente de verificación y fecha de revisión.</p></article></div>
+    <div class="col-md-6 col-lg-4"><article class="card-x"><span class="kicker"><img class="picto" src="{% picto '1f399' %}" alt="">Entrevistas</span><h3><a href="{% url 'interviews:index' %}">Entrevistas con organizaciones</a></h3><p>{% if interviews %}Conversaciones publicadas con autorización.{% elif upcoming %}Entrevista en preparación: contenido próximamente.{% else %}Aún no hay entrevistas publicadas.{% endif %}</p></article></div>
+    <div class="col-md-6 col-lg-4"><article class="card-x"><span class="kicker"><img class="picto" src="{% picto '1f4fa' %}" alt="">Audiovisual</span><h3><a href="{% url 'practice:videos' %}">Recursos audiovisuales recomendados</a></h3><p>Videos de fuentes oficiales, revisados por el equipo.</p></article></div>
+    {% if site_config.allow_exchange %}<div class="col-md-6 col-lg-4"><article class="card-x"><span class="kicker"><img class="picto" src="{% picto '1f4e6' %}" alt="">Intercambio</span><h3><a href="{% url 'exchange:index' %}">Intercambio de materiales educativos y de apoyo</a></h3><p>{% if exchange_count %}{{ exchange_count }} publicación{{ exchange_count|pluralize:"es" }} disponible{{ exchange_count|pluralize }}.{% else %}Todavía no hay publicaciones. Puedes ser la primera persona en compartir.{% endif %}</p></article></div>{% endif %}
+    <div class="col-md-6 col-lg-4"><article class="card-x"><span class="kicker"><img class="picto" src="{% picto '1f4cb' %}" alt="">Materiales compartidos</span><h3><a href="{% url 'practice:materials' %}?origen=comunidad">Materiales compartidos por la comunidad</a></h3><p>Plantillas y recursos que otras personas compartieron voluntariamente, revisados antes de publicarse.</p></article></div>
+    <div class="col-md-6 col-lg-4"><article class="card-x"><span class="kicker"><img class="picto" src="{% picto '1f4a1' %}" alt="">Preguntas</span><h3><a href="{% url 'learn:faq' %}">Preguntas frecuentes</a></h3><p>Respuestas breves y enlaces para ampliar la información.</p></article></div>
+  </div>
+  <section class="mt-4 callout teal">
+    <h2 class="h5">¿Quieres aportar?</h2>
+    <p class="mb-2">Puedes compartir un material, publicar en el intercambio o sugerir una institución. Todo se revisa antes de publicarse.</p>
+    <a class="btn btn-area btn-sm" href="{% url 'contributions:index' %}">Participar</a> <a class="btn btn-soft btn-sm" href="{% url 'core:sources' %}">Ver todas las fuentes</a>
+  </section>
+</div>
+{% endblock %}

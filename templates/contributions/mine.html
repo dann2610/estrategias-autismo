@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}Mis aportes{% endblock %}
+{% block content %}
+{% include "partials/page_head.html" with area="3" heading="Mis aportes" intro="Consulta el estado de lo que compartiste, edítalo o retíralo." %}
+<div class="container py-4">
+  <nav class="d-flex flex-wrap gap-2 mb-3" aria-label="Filtrar por estado"><a class="btn btn-sm {% if not current %}btn-primary{% else %}btn-soft{% endif %}" href="?">Todos</a>{% for v, l in statuses %}<a class="btn btn-sm {% if current == v %}btn-primary{% else %}btn-soft{% endif %}" href="?estado={{ v }}">{{ l }}</a>{% endfor %}</nav>
+  {% if items %}<div class="table-responsive"><table class="table align-middle"><thead><tr><th scope="col">Título</th><th scope="col">Tipo</th><th scope="col">Estado</th><th scope="col">Actualizado</th></tr></thead><tbody>
+  {% for obj in items %}<tr><td><a href="{% url 'contributions:summary' obj.model_key obj.pk %}">{{ obj.title }}</a></td><td>{{ obj.TYPE_LABEL }}</td><td>{{ obj|status_badge }}</td><td><small>{{ obj.updated_at|date:"d/m/Y" }}</small></td></tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}<div class="empty"><h2 class="h5">No hay aportes aquí</h2><a class="btn btn-primary" href="{% url 'contributions:index' %}">Participar</a></div>{% endif %}
+</div>
+{% endblock %}

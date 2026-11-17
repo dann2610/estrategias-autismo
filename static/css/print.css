@@ -1,0 +1,32 @@
+/* Hojas imprimibles: alto contraste, pictogramas grandes, líneas de corte */
+* { box-sizing: border-box; }
+body { font-family: "Lexend", system-ui, sans-serif; color: #1d1a24; margin: 0; background: #f3f1ee; }
+.bar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .8rem 1.2rem; background: #2B2140; }
+.bar a { color: #fff; }
+.bar button { font: inherit; font-weight: 600; background: #2456A4; color: #fff; border: 0; border-radius: 999px; padding: .6rem 1.2rem; cursor: pointer; }
+.bar button:focus-visible, .bar a:focus-visible { outline: 3px solid #F5C542; outline-offset: 3px; }
+.sheet { background: #fff; max-width: 210mm; margin: 1.2rem auto; padding: 14mm; min-height: 270mm; display: flex; flex-direction: column; }
+h1 { font-size: 26pt; margin: 0 0 8mm; font-weight: 600; }
+.cards { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; counter-reset: n; }
+.cards li { border: 2px dashed #9a90a8; border-radius: 6mm; padding: 6mm 3mm 4mm; text-align: center; break-inside: avoid; position: relative; }
+.cards img { width: 34mm; height: 34mm; display: block; margin: 0 auto 3mm; }
+.cards span { font-size: 15pt; font-weight: 600; }
+.layout-secuencia .cards li { counter-increment: n; }
+.layout-secuencia .cards li::before { content: counter(n); position: absolute; top: 2mm; left: 3mm; font-weight: 700; font-size: 14pt; color: #2456A4; }
+.layout-pares .cards { grid-template-columns: repeat(4, 1fr); }
+.layout-pares .cards img { width: 26mm; height: 26mm; }
+.first-then { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+.first-then section { border: 3px solid #2B2140; border-radius: 8mm; padding: 6mm; text-align: center; }
+.first-then h2 { font-size: 22pt; margin: 0 0 4mm; }
+.first-then img { width: 60mm; height: 60mm; }
+.first-then p { font-size: 18pt; font-weight: 600; margin: 3mm 0 0; }
+.big-card { border: 3px solid #2B2140; border-radius: 10mm; padding: 12mm; text-align: center; }
+.big-card img { width: 110mm; height: 110mm; }
+.big-card p { font-size: 30pt; font-weight: 700; margin: 6mm 0 0; }
+.prompt { margin-bottom: 7mm; break-inside: avoid; }
+.prompt h2 { font-size: 13pt; margin: 0 0 3mm; }
+.lines span { display: block; border-bottom: 1px solid #9a90a8; height: 9mm; }
+.hint { font-size: 11pt; color: #4d4558; margin: -4mm 0 8mm; }
+footer { margin-top: auto; padding-top: 8mm; font-size: 8.5pt; color: #5b5070; }
+@media (max-width: 700px) { .sheet { padding: 6mm; min-height: 0; } .cards { grid-template-columns: repeat(2, 1fr); } .first-then { grid-template-columns: 1fr; } .big-card img { width: 60vw; height: 60vw; } }
+@media print { body { background: #fff; } .no-print { display: none !important; } .sheet { margin: 0; padding: 0; max-width: none; min-height: 0; } @page { size: A4; margin: 12mm; } }

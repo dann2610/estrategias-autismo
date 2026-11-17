@@ -1,0 +1,14 @@
+{% extends "pages/_page.html" %}{% block title %}Accesibilidad{% endblock %}
+{% block content %}{% with page_area="1" page_heading="Accesibilidad" page_intro="Queremos que todas las personas puedan usar este sitio." %}{{ block.super }}{% endwith %}{% endblock %}
+{% block body %}
+<p>Diseñamos el sitio tomando como referencia las Pautas de Accesibilidad para el Contenido Web (WCAG) 2.2 del W3C.</p>
+<ul>
+<li>Se puede recorrer con teclado y el foco siempre es visible. Al inicio de cada página está el enlace «Saltar al contenido principal».</li>
+<li>Usamos la tipografía Lexend, creada para facilitar la lectura, con textos en lenguaje sencillo.</li>
+<li>Los colores tienen contraste suficiente y el color nunca es la única forma de dar información.</li>
+<li>Las imágenes informativas tienen texto alternativo; los pictogramas decorativos se ocultan a los lectores de pantalla porque siempre van acompañados de texto.</li>
+<li>Si tu dispositivo pide reducir el movimiento, eliminamos las animaciones.</li>
+<li>Los materiales imprimibles usan pictogramas grandes y textos cortos.</li>
+</ul>
+<p>Si encuentras una barrera, <a href="{% url 'reports:create' %}">repórtala</a> y la revisaremos.</p>
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "dashboard/base_dash.html" %}{% block title %}Calidad del contenido{% endblock %}
+{% block dash %}<h1 class="h2">Calidad del contenido</h1>
+<p class="text-soft">Revisión editorial: cápsulas sin recurso práctico, fuentes, visual o revisión profesional; instituciones sin revisar en más de un año y entrevistas en preparación.</p>
+<div class="table-responsive"><table class="table align-middle"><thead><tr><th>Contenido</th><th>Tipo</th><th>Estado</th><th>Observación</th></tr></thead><tbody>
+{% for obj, issue in issues %}<tr><td><a href="{% url 'dashboard:review' obj.model_key obj.pk %}">{{ obj.title|truncatechars:60 }}</a></td><td><small>{{ obj.TYPE_LABEL }}</small></td><td><small>{{ obj.get_status_display }}</small></td><td><small>{{ issue }}</small></td></tr>
+{% empty %}<tr><td colspan="4" class="text-soft">Sin observaciones.</td></tr>{% endfor %}
+</tbody></table></div>{% endblock %}

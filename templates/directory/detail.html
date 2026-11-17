@@ -1,0 +1,30 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}{{ obj.title }}{% endblock %}
+{% block content %}
+{% url 'directory:index' as list_url %}
+{% include "partials/page_head.html" with area="3" area_label="Directorio" area_url=list_url picto="1f3db" heading=obj.title intro=obj.get_kind_display %}
+<div class="container py-4 area-3">
+  <div class="row g-4">
+    <article class="col-lg-8"><div class="capsule-body">
+      <p>{{ obj.description|linebreaksbr }}</p>
+      <h2>Servicios</h2><ul>{% for x in obj.services|lines %}<li>{{ x }}</li>{% endfor %}</ul>
+      {% if obj.inclusion_services %}<h2>Inclusión educativa</h2><p>{{ obj.inclusion_services|linebreaksbr }}</p>{% endif %}
+      {% if obj.population %}<h2>Población atendida</h2><p>{{ obj.population }}</p>{% endif %}
+      <div class="callout teal mt-4"><h2 class="h6 mt-0">Verificación</h2><p class="mb-1"><span class="basis {% if obj.verification_basis == 'pendiente' %}basis-pendiente{% endif %}">{{ obj.get_verification_basis_display }}</span></p><p class="small mb-1">{{ obj.basis_help }}</p>{% if obj.evidence_note %}<p class="small mb-1">{{ obj.evidence_note }}</p>{% endif %}{% if obj.evidence_url %}<p class="small mb-0">Fuente: <a href="{{ obj.evidence_url }}" target="_blank" rel="noopener noreferrer">{{ obj.evidence_url|truncatechars:80 }}</a></p>{% endif %}</div>
+      <p class="small text-soft mt-3 mb-0">Antes de acudir, confirma horarios, requisitos y costos directamente con la institución. Aparecer en este directorio no implica acreditación ni recomendación clínica.</p>
+    </div></article>
+    <aside class="col-lg-4"><div class="side area-3">
+      <dl class="facts">
+        <dt>Ubicación</dt><dd>{{ obj.canton }}, {{ obj.province }}{% if obj.address %}<br><small>{{ obj.address }}</small>{% endif %}</dd>
+        <dt>Costo</dt><dd>{{ obj.get_cost_display }}</dd>
+        {% if obj.phone %}<dt>Teléfono</dt><dd>{{ obj.phone }}</dd>{% endif %}
+        {% if obj.email %}<dt>Correo</dt><dd><a href="mailto:{{ obj.email }}">{{ obj.email }}</a></dd>{% endif %}
+        {% if obj.website %}<dt>Sitio web</dt><dd><a href="{{ obj.website }}" target="_blank" rel="noopener noreferrer">Sitio oficial</a></dd>{% endif %}
+        {% if obj.social %}<dt>Red social</dt><dd><a href="{{ obj.social }}" target="_blank" rel="noopener noreferrer">Perfil oficial</a></dd>{% endif %}
+        <dt>Revisado</dt><dd>{{ obj.last_reviewed|date:"d/m/Y" }}</dd>
+      </dl>
+      {% include "partials/detail_actions.html" %}
+    </div></aside>
+  </div>
+</div>
+{% endblock %}

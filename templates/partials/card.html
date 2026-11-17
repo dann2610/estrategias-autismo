@@ -1,0 +1,8 @@
+{% load ui %}{% module obj as m %}
+<article class="card-x area-{{ m.area }}{% if not no_img %} has-img{% endif %}">
+  {% if not no_img %}<div class="card-img"><img src="{% foto_obj obj %}" alt="" loading="lazy" width="600" height="360"></div>{% endif %}
+  <span class="kicker"><img class="picto" src="{{ m.picto }}" alt="">{{ m.label }}</span>
+  <h3><a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a></h3>
+  <p>{{ obj.description|truncatewords:22 }}</p>
+  {% card_chips obj as chips %}{% if chips %}<div class="chips">{% for c in chips %}<span class="chip">{{ c }}</span>{% endfor %}</div>{% endif %}
+</article>

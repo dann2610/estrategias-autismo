@@ -1,0 +1,3 @@
+{% if form.non_field_errors %}<div class="alert alert-danger" role="alert">{% for e in form.non_field_errors %}<div>{{ e }}</div>{% endfor %}</div>{% endif %}
+{% if form.errors %}<div class="visually-hidden" role="alert">El formulario tiene errores. Revisa los campos marcados.</div>{% endif %}
+{% for field in form %}{% if field.name == "website" %}<div class="hp-field" aria-hidden="true"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}</div>{% else %}{% include "partials/field.html" %}{% endif %}{% endfor %}

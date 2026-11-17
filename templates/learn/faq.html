@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Preguntas frecuentes{% endblock %}
+{% block content %}
+{% url 'core:orientation' as o_url %}
+{% include "partials/page_head.html" with area="3" area_label="Orientación y comunidad" area_url=o_url picto="1f4a1" heading="Preguntas frecuentes" image="img/fotos/cabeza-rompecabezas.jpg" image_alt="Silueta de una cabeza con un cerebro formado por piezas de colores." intro="Respuestas breves, con enlaces para ampliar la información." %}
+<div class="container py-4" style="max-width:860px">
+  <div class="accordion" id="faq">
+  {% for f in faqs %}
+    <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f{{ f.pk }}" aria-expanded="false" aria-controls="f{{ f.pk }}">{{ f.question }}</button></h2>
+    <div id="f{{ f.pk }}" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body">{{ f.answer|linebreaks }}{% if f.link_url %}<a href="{{ f.link_url }}">{{ f.link_label|default:"Ampliar información" }}</a>{% endif %}</div></div></div>
+  {% empty %}<div class="empty">Aún no hay preguntas publicadas.</div>{% endfor %}
+  </div>
+</div>
+{% endblock %}

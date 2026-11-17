@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Banco de pictogramas{% endblock %}
+{% block content %}
+{% url 'practice:hub' as hub %}
+{% include "partials/page_head.html" with area="2" area_label="Actividades y recursos" area_url=hub picto="1f600" heading="Banco de pictogramas" image="img/ilustraciones/agenda.svg" image_alt="Manos que ordenan tarjetas con pictogramas." intro="Imágenes sencillas para anticipar rutinas, expresar emociones y hacer pedidos. Úsalas en el creador de agendas o en los materiales imprimibles." %}
+<div class="container py-4 area-2">
+  <div class="d-flex flex-wrap gap-2 mb-4"><a class="btn btn-area" href="{% url 'practice:agenda' %}">Crear una agenda con estos pictogramas</a><a class="btn btn-soft" href="https://arasaac.org" target="_blank" rel="noopener noreferrer">Ver más pictogramas en ARASAAC</a></div>
+  {% for label, pics in groups %}<h2 class="h4 mt-3">{{ label }}</h2><div class="picto-grid mb-3">{% for p in pics %}<div class="picto-card"><img src="{{ p.src }}" alt="">{{ p.label }}</div>{% endfor %}</div>{% endfor %}
+  <p class="small text-soft mt-4">Pictogramas de {{ credit }}, licencia <a href="{{ license_url }}" target="_blank" rel="noopener noreferrer">{{ license }}</a>. Para sistemas de comunicación completos, ARASAAC ofrece pictogramas de Sergio Palao, propiedad del Gobierno de Aragón, con licencia CC BY-NC-SA.</p>
+</div>
+{% endblock %}

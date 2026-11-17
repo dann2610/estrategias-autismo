@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ obj.title }} (próximamente){% endblock %}
+{% block content %}
+{% url 'interviews:index' as list_url %}
+{% include "partials/page_head.html" with area="3" area_label="Entrevistas" area_url=list_url picto="1f399" heading=obj.title intro="Contenido próximamente: esta entrevista está en preparación." %}
+<div class="container py-4 area-3" style="max-width:900px">
+  <div class="upcoming">
+    <p>{{ obj.description }}</p>
+    <h2 class="h5">Qué publicaremos cuando se realice</h2>
+    <ul><li>Nombre de la organización y su descripción institucional verificada.</li><li>Nombre y cargo de la persona entrevistada, título y fecha.</li><li>Video, audio o transcripción, y un resumen de los temas.</li><li>Preguntas y respuestas textuales, y referencias complementarias.</li><li>Constancia de que contamos con autorización para publicarla.</li></ul>
+    <h2 class="h5 mt-4">Guía de preguntas</h2>
+    <ol>{% for q in questions %}<li><strong>{{ q.question }}</strong> <span class="chip">{{ q.get_theme_display }}</span></li>{% endfor %}</ol>
+    <p class="small text-soft mb-0">No publicamos declaraciones, nombres ni experiencias de la organización hasta que la entrevista se realice y sea autorizada.</p>
+  </div>
+</div>
+{% endblock %}

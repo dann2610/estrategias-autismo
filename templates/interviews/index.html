@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}Entrevistas{% endblock %}
+{% block content %}
+{% url 'core:orientation' as o_url %}
+{% include "partials/page_head.html" with area="3" area_label="Orientación y comunidad" area_url=o_url picto="1f399" heading="Entrevistas" image="img/fotos/hablemos-autismo.jpg" image_alt="Siluetas de una niña y un niño con el texto «Hablemos de autismo»." intro="Conversaciones con organizaciones que acompañan a familias y docentes. Solo publicamos entrevistas realizadas y autorizadas." %}
+<div class="container py-4 area-3">
+  {% for obj in published %}<div class="mb-3">{% include "partials/card.html" with no_img=True %}</div>{% endfor %}
+  {% for obj in upcoming %}
+  <section class="upcoming mb-3"><span class="chip chip-area">Contenido próximamente</span>
+    <h2 class="h4 mt-2">{{ obj.title }}</h2><p>{{ obj.description }}</p>
+    <a class="btn btn-area btn-sm" href="{{ obj.get_absolute_url }}">Ver la guía de preguntas</a></section>
+  {% endfor %}
+  {% if not published and not upcoming %}<div class="empty"><p class="mb-0">Aún no hay entrevistas.</p></div>{% endif %}
+</div>
+{% endblock %}

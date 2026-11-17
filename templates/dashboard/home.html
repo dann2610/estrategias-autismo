@@ -1,0 +1,13 @@
+{% extends "dashboard/base_dash.html" %}{% load ui %}{% block title %}Panel de administración{% endblock %}
+{% block dash %}
+<h1 class="h2">Resumen general</h1>
+{% if quality_count %}<div class="callout mt-2"><a href="{% url 'dashboard:quality' %}">{{ quality_count }} observación{{ quality_count|pluralize:"es" }} de calidad del contenido</a> requieren atención (fuentes, visuales, revisión profesional o entrevistas en preparación).</div>{% endif %}
+<div class="row g-3 my-2">{% for label, value, icon, tone in kpis %}<div class="col-sm-6 col-xl-4"><div class="kpi"><span class="ico" aria-hidden="true"><i class="bi bi-{{ icon }}"></i></span><div><div class="num">{{ value }}</div><div class="lbl">{{ label }}</div></div></div></div>{% endfor %}</div>
+<div class="row g-4 mt-1">
+  <div class="col-xl-7"><div class="side"><div class="section-head mb-2"><h2 class="h5 mb-0">Esperan revisión</h2><a class="btn btn-soft btn-sm" href="{% url 'dashboard:inbox' %}">Ver bandeja</a></div>
+    {% for obj in pending %}<div class="d-flex justify-content-between align-items-center gap-2 py-2 border-bottom"><div><a class="fw-bold" href="{% url 'dashboard:review' obj.model_key obj.pk %}">{{ obj.title }}</a><br><small class="text-soft">{{ obj.TYPE_LABEL }} · {{ obj.author.email|default:"Equipo" }} · {{ obj.submitted_at|default:obj.created_at|timesince }}</small></div>{{ obj|status_badge }}</div>
+    {% empty %}<p class="text-soft mb-0">No hay propuestas pendientes. ¡Todo al día!</p>{% endfor %}</div></div>
+  <div class="col-xl-5"><div class="side"><h2 class="h5">Últimas acciones</h2>
+    {% for a in recent_actions %}<div class="small py-2 border-bottom"><strong>{{ a.get_action_display }}</strong> · {{ a.content_type.name }} #{{ a.object_id }}<br><span class="text-soft">{{ a.actor.email|default:"Sistema" }} · {{ a.created_at|timesince }}</span></div>{% empty %}<p class="text-soft">Sin actividad.</p>{% endfor %}</div></div>
+</div>
+{% endblock %}

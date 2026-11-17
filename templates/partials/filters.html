@@ -1,0 +1,15 @@
+{% load ui %}
+<button class="btn btn-soft btn-sm d-md-none mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#filtros" aria-expanded="false" aria-controls="filtros"><i class="bi bi-sliders" aria-hidden="true"></i> Filtros{% if request.GET %} (activos){% endif %}</button>
+<form class="filters mb-3 collapse d-md-block" id="filtros" method="get" role="search" aria-label="Filtrar resultados">
+  <div class="row g-2 align-items-end">
+    {% for field in filter_form %}
+      {% if field|is_check %}
+      <div class="col-6 col-md-auto"><div class="form-check mb-2">{{ field|bs }}<label class="form-check-label small" for="{{ field.id_for_label }}">{{ field.label }}</label></div></div>
+      {% else %}
+      <div class="{% if field.name == 'q' %}col-12 col-md-4{% else %}col-6 col-md{% endif %}"><label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field|bs:"form-control-sm" }}</div>
+      {% endif %}
+    {% endfor %}
+    <div class="col-12 col-md-auto d-flex gap-2"><button class="btn btn-primary btn-sm" type="submit">Filtrar</button><a class="btn btn-soft btn-sm" href="{{ request.path }}">Limpiar</a></div>
+  </div>
+</form>
+<p class="text-soft small" aria-live="polite">{{ total }} resultado{{ total|pluralize }}</p>

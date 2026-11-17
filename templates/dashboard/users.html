@@ -1,0 +1,10 @@
+{% extends "dashboard/base_dash.html" %}{% block title %}Cuentas{% endblock %}
+{% block dash %}<h1 class="h2">Gestión de cuentas</h1>
+<form class="filters my-3" method="get"><div class="row g-2"><div class="col"><label class="visually-hidden" for="q">Buscar</label><input class="form-control" id="q" name="q" value="{{ q }}" placeholder="Correo o nombre"></div><div class="col-auto"><button class="btn btn-primary">Buscar</button></div></div></form>
+<div class="table-responsive"><table class="table align-middle"><thead><tr><th>Correo</th><th>Participación</th><th>Registro</th><th>Rol</th><th>Estado</th><th></th></tr></thead><tbody>
+{% for u in page_obj %}<tr><td>{{ u.email }}<br><small class="text-soft">{{ u.public_name }}</small></td><td><small>{{ u.profile.get_participation_display }}</small></td><td><small>{{ u.date_joined|date:"d/m/Y" }}</small></td>
+<td><small>{% if u.is_superuser %}Administrador principal{% elif u.groups.all %}{{ u.groups.all|join:", " }}{% else %}Usuario{% endif %}</small></td>
+<td>{% if u.is_active %}<span class="badge text-bg-success">Activa</span>{% else %}<span class="badge text-bg-danger">Suspendida</span>{% if u.profile.suspension_reason %}<br><small>{{ u.profile.suspension_reason }}</small>{% endif %}{% endif %}</td>
+<td>{% if not u.is_superuser and u != user %}<form method="post" action="{% url 'dashboard:toggle_user' u.pk %}" class="d-flex gap-1" {% if u.is_active %}data-confirm="¿Suspender esta cuenta?"{% endif %}>{% csrf_token %}{% if u.is_active %}<label class="visually-hidden" for="m{{ u.pk }}">Motivo</label><input class="form-control form-control-sm" id="m{{ u.pk }}" name="motivo" placeholder="Motivo" required><button class="btn btn-primary btn-sm">Suspender</button>{% else %}<button class="btn btn-soft btn-sm">Reactivar</button>{% endif %}</form>{% endif %}</td></tr>{% endfor %}
+</tbody></table></div>{% include "partials/pagination.html" %}
+<p class="small text-soft">Los roles y permisos administrativos solo pueden asignarse desde Django Admin por el administrador principal.</p>{% endblock %}

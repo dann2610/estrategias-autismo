@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ ctype.label }}{% endblock %}
+{% block content %}
+{% url 'contributions:index' as p_url %}
+{% if obj %}{% include "partials/page_head.html" with area="3" area_label="Participar" area_url=p_url heading="Editar: "|add:obj.title intro="Si ya estaba publicado, tus cambios volverán a revisión." %}
+{% else %}{% include "partials/page_head.html" with area="3" area_label="Participar" area_url=p_url heading=ctype.label intro=ctype.help %}{% endif %}
+<div class="container py-4"><div class="row g-4">
+  <div class="col-lg-8"><form method="post" enctype="multipart/form-data" class="capsule-body" novalidate>{% csrf_token %}
+    {% include "partials/form.html" %}
+    <div class="d-flex gap-2 flex-wrap"><button class="btn btn-primary" type="submit">{% if obj %}Guardar cambios{% else %}Guardar y ver resumen{% endif %}</button><a class="btn btn-soft" href="{% if obj %}{% url 'contributions:summary' obj.model_key obj.pk %}{% else %}{% url 'contributions:index' %}{% endif %}">Cancelar</a></div>
+  </form></div>
+  <aside class="col-lg-4"><div class="callout"><h2 class="h6 mt-0">Protege la privacidad</h2><p class="mb-0 small">No incluyas nombres completos, fotos, direcciones ni datos clínicos de niñas y niños. Comparte solo contactos que tengas permiso de publicar.</p></div>
+  {% if form.is_multipart %}<div class="callout info mt-3 small">Archivos permitidos: PDF, PNG o JPG de hasta 5 MB. Comparte solo materiales propios o con permiso.</div>{% endif %}</aside>
+</div></div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}{{ obj.title }}{% endblock %}
+{% block content %}
+{% url 'practice:activities' as list_url %}
+{% include "partials/page_head.html" with area="2" area_label="Actividades" area_url=list_url picto="1f3a8" heading=obj.title intro=obj.description %}
+<div class="container py-4 area-2">
+  <div class="row g-4">
+    <article class="col-lg-8"><div class="capsule-body">
+      <div class="callout mb-4"><strong>Objetivo orientativo:</strong> {{ obj.objective }}</div>
+      <h2>Materiales</h2><ul>{% for x in obj.materials_needed|lines %}<li>{{ x }}</li>{% endfor %}</ul>
+      <h2>Cómo hacerlo</h2><ol class="steps">{% for x in obj.instructions|lines %}<li>{{ x }}</li>{% endfor %}</ol>
+      <div class="notes mt-4">
+        <div class="do"><h2>Adaptaciones</h2><ul>{% for x in obj.adaptations|lines %}<li>{{ x }}</li>{% endfor %}</ul></div>
+        <div class="careful"><h2>Precauciones</h2><ul>{% for x in obj.precautions|lines %}<li>{{ x }}</li>{% endfor %}</ul></div>
+      </div>
+      {% if materials %}<section class="bridge"><h2><img class="picto" src="{% picto '1f4cb' %}" alt="">Materiales para imprimir</h2><div class="bridge-grid">{% for m in materials %}<a class="bridge-item" href="{{ m.get_absolute_url }}"><img src="{% picto '1f4cb' %}" alt=""><span><strong>{{ m.title }}</strong><span>{{ m.get_kind_display }}</span></span></a>{% endfor %}</div></section>{% endif %}
+      {% if capsules %}<h2>Para entender por qué funciona</h2><ul>{% for c in capsules %}<li><a href="{{ c.get_absolute_url }}">{{ c.title }}</a></li>{% endfor %}</ul>{% endif %}
+      {% if obj.sources.all %}<h2>Fuentes</h2><ul class="refs">{% for s in obj.sources.all %}<li>{{ s.citation }}{% if s.url %} <a href="{{ s.url }}" target="_blank" rel="noopener noreferrer">{{ s.url }}</a>{% endif %}</li>{% endfor %}</ul>{% endif %}
+    </div></article>
+    <aside class="col-lg-4"><div class="side area-2">
+      <dl class="facts"><dt>Tipo</dt><dd>{{ obj.get_kind_display }}</dd><dt>Edad</dt><dd>{{ obj.get_age_range_display }}</dd><dt>Duración</dt><dd>{{ obj.get_duration_display }}</dd><dt>Lugar</dt><dd>{{ obj.get_place_display }}</dd></dl>
+      {% if obj.topics.all %}<div class="chips mt-3">{% for t in obj.topics.all %}<a class="chip chip-area text-decoration-none" href="{{ t.get_absolute_url }}">{{ t.name }}</a>{% endfor %}</div>{% endif %}
+      {% include "partials/detail_actions.html" %}
+    </div></aside>
+  </div>
+  <div class="disclaimer mt-4"><i class="bi bi-info-circle fs-5" aria-hidden="true"></i><div>Es una actividad educativa, no un tratamiento clínico. Los resultados varían en cada niña y niño. Si una actividad genera malestar, detente y prueba otra adaptación.</div></div>
+</div>
+{% endblock %}

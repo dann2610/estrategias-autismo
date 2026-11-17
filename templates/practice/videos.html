@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Recursos audiovisuales{% endblock %}
+{% block content %}
+{% url 'core:orientation' as o_url %}
+{% include "partials/page_head.html" with area="3" area_label="Orientación y comunidad" area_url=o_url picto="1f4fa" heading="Recursos audiovisuales recomendados" image="img/fotos/nino-bloques-suelo.jpg" image_alt="Un niño acostado en el suelo sonríe rodeado de bloques de colores." intro="Videos de instituciones oficiales que el equipo revisó. Indicamos quién los publica, el idioma y si tienen subtítulos." %}
+<div class="container py-4 area-3">{% include "partials/filters.html" %}{% include "partials/grid.html" %}
+<p class="small text-soft mt-3">Seleccionamos pocos recursos y los revisamos con cuidado. Iremos agregando más cuando cumplan los criterios de calidad.</p></div>
+{% endblock %}

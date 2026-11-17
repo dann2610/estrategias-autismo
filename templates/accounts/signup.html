@@ -1,0 +1,9 @@
+{% extends "accounts/_narrow.html" %}{% block title %}Crear cuenta{% endblock %}
+{% block body %}
+<h1 class="h2">Crear una cuenta</h1>
+<p class="text-soft">Es gratis. Solo pedimos lo necesario; tu nombre público puede ser un seudónimo.</p>
+<form method="post" novalidate>{% csrf_token %}{% include "partials/form.html" %}
+<p class="small text-soft">Lee las <a href="{% url 'core:rules' %}" target="_blank" rel="noopener">normas de la comunidad</a> y la <a href="{% url 'core:privacy' %}" target="_blank" rel="noopener">política de privacidad</a>.</p>
+<button class="btn btn-primary w-100" type="submit">Crear cuenta</button></form>
+<p class="small mt-3 text-center">¿Ya tienes cuenta? <a href="{% url 'accounts:login' %}">Ingresa</a></p>
+{% endblock %}

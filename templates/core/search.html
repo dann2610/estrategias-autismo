@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Buscar{% endblock %}
+{% block content %}
+{% include "partials/page_head.html" with area="1" heading="Buscar" intro="Solo se muestran contenidos revisados y publicados." %}
+<div class="container py-4">
+  <form class="filters mb-4" role="search" method="get"><div class="row g-2"><div class="col"><label class="visually-hidden" for="q">Qué buscas</label><input id="q" class="form-control" type="search" name="q" value="{{ q }}" placeholder="Ej.: rutinas, comunicación, escuela, Guayaquil" minlength="2"></div><div class="col-auto"><button class="btn btn-primary">Buscar</button></div></div></form>
+  {% if q %}
+    {% for label, items in groups %}<h2 class="h4 mt-4">{{ label }}</h2><div class="row g-3">{% for obj in items %}<div class="col-md-6 col-lg-4">{% include "partials/card.html" %}</div>{% endfor %}</div>
+    {% empty %}<div class="empty"><h2 class="h5">No encontramos contenido publicado para «{{ q }}»</h2><p class="text-soft mb-0">Prueba con otra palabra o explora las tres áreas desde el menú.</p></div>{% endfor %}
+  {% endif %}
+</div>
+{% endblock %}

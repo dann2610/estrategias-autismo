@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Mis favoritos{% endblock %}
+{% block content %}
+{% include "partials/page_head.html" with area="2" heading="Mis favoritos" intro="Lo que guardaste para volver a consultar." %}
+<div class="container py-4"><div class="row g-3">
+{% for f in favorites %}{% with obj=f.item %}<div class="col-md-6 col-lg-4">{% include "partials/card.html" %}</div>{% endwith %}
+{% empty %}<div class="col-12"><div class="empty"><i class="bi bi-bookmark" aria-hidden="true"></i><h2 class="h5 mt-2">Aún no guardas favoritos</h2><p class="text-soft">Usa «Guardar en favoritos» en cualquier ficha.</p><a class="btn btn-primary" href="{% url 'practice:materials' %}">Ver materiales</a></div></div>{% endfor %}
+</div></div>
+{% endblock %}

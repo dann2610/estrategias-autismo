@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block title %}Notificaciones{% endblock %}
+{% block content %}
+{% include "partials/page_head.html" with area="1" heading="Notificaciones" intro="Avisos sobre tus aportes y la plataforma." %}
+<div class="container py-4 measure">
+  {% if page_obj.object_list %}<form method="post" action="{% url 'notifications:mark_all' %}" class="mb-3">{% csrf_token %}<button class="btn btn-soft btn-sm">Marcar todas como leídas</button></form>{% endif %}
+  {% for n in page_obj %}<form method="post" action="{% url 'notifications:open' n.pk %}" class="side mb-2 d-flex justify-content-between align-items-center gap-2">{% csrf_token %}<div>{% if not n.read %}<span class="badge rounded-pill text-bg-warning me-1">Nueva</span>{% endif %}{{ n.message }}<br><small class="text-soft">{{ n.created_at|timesince }}</small></div><button class="btn btn-soft btn-sm" type="submit">Abrir</button></form>
+  {% empty %}<div class="empty"><i class="bi bi-bell-slash" aria-hidden="true"></i><p class="mt-2 mb-0">No tienes notificaciones.</p></div>{% endfor %}
+  {% include "partials/pagination.html" %}
+</div>
+{% endblock %}

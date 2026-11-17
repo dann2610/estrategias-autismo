@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Reglas del intercambio{% endblock %}
+{% block content %}
+{% url 'exchange:index' as list_url %}
+{% include "partials/page_head.html" with area="3" area_label="Intercambio de materiales" area_url=list_url picto="1f4e6" heading="Reglas de participación del intercambio" intro="Para que el intercambio sea seguro y útil para todas las personas." %}
+<div class="container py-4" style="max-width:860px"><div class="capsule-body">
+<ol class="steps">
+<li>La participación es voluntaria y gratuita. No se permite vender ni pedir dinero.</li>
+<li>Solo se publican materiales educativos o de apoyo seguros, limpios y aptos para niñas y niños.</li>
+<li>Cada publicación se revisa antes de aparecer. El equipo puede rechazar o retirar publicaciones que no cumplan estas reglas.</li>
+<li>Muestra solo un contacto que autorices (correo o WhatsApp). Nunca publiques tu domicilio, documentos ni datos de niñas o niños.</li>
+<li>Coordina las entregas en lugares públicos y de día. El proyecto no participa en las entregas ni garantiza la disponibilidad.</li>
+<li>Actualiza la disponibilidad (disponible, reservado o finalizado) para no generar falsas expectativas.</li>
+<li>Reporta cualquier publicación sospechosa con el botón «Reportar un problema».</li>
+</ol></div></div>
+{% endblock %}

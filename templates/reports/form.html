@@ -1,0 +1,5 @@
+{% extends "accounts/_narrow.html" %}{% block title %}Reportar un problema{% endblock %}
+{% block body %}<h1 class="h3">Reportar un problema</h1>
+{% if item %}<p class="text-soft">Sobre: <strong>{{ item.title }}</strong></p>{% else %}<p class="text-soft">Cuéntanos qué página o información está desactualizada, es incorrecta o incumple las normas.</p>{% endif %}
+<form method="post" novalidate>{% csrf_token %}{% include "partials/form.html" %}<button class="btn btn-primary" type="submit">Enviar reporte</button></form>
+<p class="small text-soft mt-3 mb-0">Los reportes solo los ve el equipo de moderación.</p>{% endblock %}

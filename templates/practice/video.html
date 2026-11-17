@@ -1,0 +1,17 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}{{ obj.title }}{% endblock %}
+{% block content %}
+{% url 'practice:videos' as list_url %}
+{% include "partials/page_head.html" with area="3" area_label="Recursos audiovisuales" area_url=list_url picto="1f4fa" heading=obj.title intro=obj.description %}
+<div class="container py-4 area-3">
+  <div class="row g-4">
+    <article class="col-lg-8"><div class="capsule-body">
+      {% if obj.youtube_id %}<div class="ratio ratio-16x9 mb-3"><iframe src="https://www.youtube-nocookie.com/embed/{{ obj.youtube_id }}" title="{{ obj.title }}" loading="lazy" allow="encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>{% endif %}
+      <h2>Por qué lo recomendamos</h2><p>{{ obj.why_recommended|linebreaksbr }}</p>
+      {% if obj.url %}<a class="btn btn-area" href="{{ obj.url }}" target="_blank" rel="noopener noreferrer">Ver en el sitio oficial</a><p class="small text-soft mt-2">Se abrirá el sitio de {{ obj.publisher }}, que no administramos.</p>{% endif %}
+      {% if capsules %}<h2>Relacionado</h2><ul>{% for c in capsules %}<li><a href="{{ c.get_absolute_url }}">{{ c.title }}</a></li>{% endfor %}</ul>{% endif %}
+    </div></article>
+    <aside class="col-lg-4"><div class="side area-3"><dl class="facts"><dt>Publica</dt><dd>{{ obj.publisher }}</dd><dt>Idioma</dt><dd>{{ obj.language }}</dd><dt>Subtítulos</dt><dd>{{ obj.has_subtitles|yesno_es }}</dd>{% if obj.duration %}<dt>Duración</dt><dd>{{ obj.duration }}</dd>{% endif %}<dt>Revisado</dt><dd>{{ obj.reviewed_on|date:"d/m/Y" }}</dd></dl>{% include "partials/detail_actions.html" %}</div></aside>
+  </div>
+</div>
+{% endblock %}

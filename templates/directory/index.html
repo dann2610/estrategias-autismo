@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Directorio de instituciones{% endblock %}
+{% block content %}
+{% url 'core:orientation' as o_url %}
+{% include "partials/page_head.html" with area="3" area_label="Orientación y comunidad" area_url=o_url picto="1f3db" heading="Directorio de instituciones y servicios" image="img/fotos/lazo-manos.jpg" image_alt="Un lazo de colores junto a cuatro manos de juguete." intro="Solo publicamos instituciones con datos verificables. Cada ficha indica la fuente, la base de la verificación y la fecha de la última revisión." %}
+<div class="container py-4 area-3">
+  <details class="callout teal mb-3"><summary class="fw-semibold">¿Qué significa cada tipo de verificación?</summary>
+    <dl class="facts mt-2">{% for key, help in basis.items %}<dt>{{ basis_labels|get_item:key }}</dt><dd>{{ help }}</dd>{% endfor %}</dl>
+    <p class="small mb-0 mt-2">Acreditación, autorización y registro no son lo mismo. Ninguna ficha es una recomendación clínica.</p>
+  </details>
+  {% include "partials/filters.html" %}
+  {% if page_obj.object_list %}
+  <div class="row g-3">{% for obj in page_obj %}<div class="col-md-6"><article class="card-x area-3">
+    <span class="kicker">{{ obj.get_kind_display }}</span>
+    <h3><a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a></h3>
+    <p>{{ obj.description|truncatewords:26 }}</p>
+    <div class="chips"><span class="chip">{{ obj.canton }}, {{ obj.province }}</span><span class="chip">{{ obj.get_cost_display }}</span><span class="basis">{{ obj.get_verification_basis_display }}</span><span class="chip">Revisado el {{ obj.last_reviewed|date:"d/m/Y" }}</span></div>
+  </article></div>{% endfor %}</div>
+  {% include "partials/pagination.html" %}
+  {% else %}<div class="empty"><h2 class="h5">No hay instituciones verificadas con esos filtros</h2><p class="text-soft mb-0">No mostramos servicios sin verificar. Si conoces uno, puedes sugerirlo.</p></div>{% endif %}
+  <p class="small text-soft mt-3">Ninguna institución educativa con programa de inclusión ha sido incorporada todavía: se publicará cuando contemos con datos suficientes y verificables. <a href="{% url 'contributions:create' 'institucion' %}">Sugerir una institución</a>.</p>
+</div>
+{% endblock %}

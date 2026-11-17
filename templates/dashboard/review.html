@@ -1,0 +1,38 @@
+{% extends "dashboard/base_dash.html" %}{% load ui %}{% block title %}Revisar: {{ obj.title }}{% endblock %}
+{% block dash %}
+<a href="{% url 'dashboard:inbox' %}" class="small">← Volver a la bandeja</a>
+<div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mt-2"><div><h1 class="h3 mb-1">{{ obj.title }}</h1><p class="text-soft mb-0">{{ obj.TYPE_LABEL }} · Autor: {{ obj.author.email|default:"Equipo editorial" }} · Creado {{ obj.created_at|date:"d/m/Y H:i" }}</p></div><div class="d-flex gap-2 align-items-center">{{ obj|status_badge }}{{ obj|origin_badge }}{% if obj.featured %}<span class="badge text-bg-primary">Destacado</span>{% endif %}</div></div>
+<div class="row g-4 mt-1">
+  <div class="col-xl-8">
+    <div class="detail-body">
+      <h2 class="h5 mt-0">Contenido enviado</h2>
+      <dl class="facts">{% for r in rows %}<dt>{{ r.label }}</dt><dd>{% if r.is_file %}<a href="{{ r.value }}" target="_blank" rel="noopener">Ver archivo</a>{% if r.private %} <span class="badge text-bg-secondary">Privado</span>{% endif %}{% elif r.is_url %}<a href="{{ r.value }}" target="_blank" rel="noopener noreferrer nofollow">{{ r.value|truncatechars:60 }}</a> <small class="text-soft">(revisar idoneidad y anuncios)</small>{% else %}{{ r.value|yesno_es|linebreaksbr }}{% endif %}</dd>{% endfor %}</dl>
+    </div>
+    <div class="callout info mt-3 small"><strong>Lista de revisión:</strong> contenido y fuente confiables · enlaces legítimos y seguros · sin datos identificables de menores ni de terceros · respeta derechos de autor · sin promesas de cura, castigos ni recomendaciones peligrosas · lenguaje respetuoso.</div>
+    {% if reports %}<div class="side mt-3"><h2 class="h5">Reportes sobre este contenido</h2>{% for r in reports %}<p class="small mb-1"><strong>{{ r.get_reason_display }}</strong> ({{ r.get_state_display }}): {{ r.details }}</p>{% endfor %}</div>{% endif %}
+  </div>
+  <div class="col-xl-4">
+    {% with problems=obj.publication_problems %}{% if problems %}<div class="callout warn mb-3 small"><strong>Todavía no se puede publicar:</strong><ul class="mb-0 mt-1">{% for p in problems %}<li>{{ p }}</li>{% endfor %}</ul></div>{% endif %}{% endwith %}
+    <div class="side mb-3">
+      <h2 class="h5">Decisión</h2>
+      <form method="post" action="{% url 'dashboard:act' obj.model_key obj.pk %}">{% csrf_token %}
+        <label class="form-label" for="comentario">Motivo o cambios solicitados</label>
+        <textarea class="form-control mb-2" id="comentario" name="comentario" rows="4" placeholder="Obligatorio para rechazar o solicitar cambios. El autor lo recibirá."></textarea>
+        <div class="d-grid gap-2">
+          {% if obj.status == 'pendiente' %}<button class="btn btn-soft" name="accion" value="iniciar">Marcar «En revisión»</button>{% endif %}
+          {% if obj.status in 'pendiente en_revision cambios archivado' %}<button class="btn btn-primary" name="accion" value="aprobar"><i class="bi bi-check-lg" aria-hidden="true"></i> Aprobar y publicar</button>{% endif %}
+          {% if obj.status == 'pendiente' or obj.status == 'en_revision' %}<button class="btn btn-soft" name="accion" value="cambios"><i class="bi bi-pencil-square" aria-hidden="true"></i> Solicitar cambios</button>
+          <button class="btn btn-primary" name="accion" value="rechazar"><i class="bi bi-x-lg" aria-hidden="true"></i> Rechazar</button>{% endif %}
+          {% if obj.status == 'aprobado' %}<button class="btn btn-soft" name="accion" value="despublicar">Despublicar para revisar</button><button class="btn btn-soft" name="accion" value="destacar">{% if obj.featured %}Quitar de destacados{% else %}Destacar en inicio{% endif %}</button>{% endif %}
+          {% if obj.status != 'archivado' and obj.status != 'borrador' %}<button class="btn btn-soft" name="accion" value="archivar">Archivar</button>{% endif %}
+        </div>
+      </form>
+      <hr>
+      <div class="d-flex gap-2 flex-wrap"><a class="btn btn-soft btn-sm" href="{{ admin_url }}">Editar contenido</a>{% if obj.is_public %}<a class="btn btn-soft btn-sm" href="{{ obj.get_absolute_url }}" target="_blank" rel="noopener">Ver pública</a>{% endif %}<a class="btn btn-soft btn-sm text-danger" href="{% url 'dashboard:delete' obj.model_key obj.pk %}">Eliminar</a></div>
+    </div>
+    <div class="side"><h2 class="h5">Historial de moderación</h2>
+      {% for h in history %}<div class="small py-2 border-bottom"><strong>{{ h.get_action_display }}</strong>{% if h.to_status %} → {{ h.get_to_status_display }}{% endif %}<br><span class="text-soft">{{ h.actor.email|default:"Sistema" }} · {{ h.created_at|date:"d/m/Y H:i" }}</span>{% if h.comment %}<br>«{{ h.comment }}»{% endif %}{% if h.changes.campos %}<br><span class="text-soft">Campos: {{ h.changes.campos|join:", " }}</span>{% endif %}</div>{% empty %}<p class="text-soft small">Sin historial.</p>{% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

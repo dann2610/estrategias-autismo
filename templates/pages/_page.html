@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "partials/page_head.html" with area=page_area heading=page_heading intro=page_intro image=page_image image_alt=page_image_alt %}
+<div class="container py-4" style="max-width:900px"><div class="capsule-body">{% block body %}{% endblock %}</div></div>
+{% endblock %}

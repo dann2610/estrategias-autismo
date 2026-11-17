@@ -1,0 +1,6 @@
+{% if page_obj.object_list %}
+<div class="row g-3">{% for obj in page_obj %}<div class="col-md-6 col-lg-4">{% include "partials/card.html" %}</div>{% endfor %}</div>
+{% include "partials/pagination.html" %}
+{% else %}
+<div class="empty"><h2 class="h5">No hay resultados publicados con esos filtros</h2><p class="text-soft mb-0">Prueba con menos filtros. Solo mostramos contenido revisado.</p></div>
+{% endif %}

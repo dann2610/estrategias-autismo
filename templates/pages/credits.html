@@ -1,0 +1,12 @@
+{% extends "pages/_page.html" %}{% block title %}Créditos y licencias{% endblock %}
+{% block content %}{% with page_area="2" page_heading="Créditos y licencias" page_intro="Recursos de terceros que usa el sitio y sus condiciones." %}{{ block.super }}{% endwith %}{% endblock %}
+{% block body %}
+<dl class="facts">
+<dt>Pictogramas</dt><dd>Twemoji, © Twitter, Inc. y otros colaboradores. Licencia <a href="https://creativecommons.org/licenses/by/4.0/deed.es" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. Se usan como apoyos visuales sencillos.</dd>
+<dt>Pictogramas recomendados</dt><dd>ARASAAC: pictogramas de Sergio Palao, propiedad del Gobierno de Aragón, licencia CC BY-NC-SA. Se enlazan; no se copian en este sitio.</dd>
+<dt>Ilustraciones</dt><dd>Ilustraciones originales creadas para este proyecto (carpeta <code>static/img/ilustraciones/</code>). Pueden usarse libremente dentro del sitio.</dd>
+<dt>Tipografía</dt><dd>Lexend, de The Lexend Project Authors. SIL Open Font License 1.1.</dd>
+<dt>Componentes</dt><dd>Bootstrap y Bootstrap Icons, licencia MIT.</dd>
+<dt>Desarrollo</dt><dd>Django (BSD), PostgreSQL (licencia PostgreSQL).</dd>
+</dl>
+{% endblock %}

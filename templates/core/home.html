@@ -1,0 +1,200 @@
+{% extends "base.html" %}{% load static ui %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+
+{# ===== Carrusel principal: comprensión, comunicación e inclusión ===== #}
+<section class="slider-wrap" aria-label="Mensajes principales">
+  <div class="container">
+    <div id="carruselInicio" class="carousel slide main-slider" data-bs-ride="carousel" data-bs-interval="6500" data-bs-pause="hover" aria-roledescription="carrusel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carruselInicio" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Diapositiva 1: comprensión"></button>
+        <button type="button" data-bs-target="#carruselInicio" data-bs-slide-to="1" aria-label="Diapositiva 2: comunicación"></button>
+        <button type="button" data-bs-target="#carruselInicio" data-bs-slide-to="2" aria-label="Diapositiva 3: inclusión"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active" aria-roledescription="diapositiva">
+          <div class="slide-card tone-1">
+            <div class="slide-text">
+              <span class="slide-kicker"><i class="bi bi-lightbulb" aria-hidden="true"></i> Comprensión</span>
+              <h2>Comprender para acompañar</h2>
+              <p>Cada niña y cada niño con autismo siente, se comunica y aprende a su manera. Conocerlo es el primer paso para apoyarlo.</p>
+              <div class="slide-actions">
+                <a class="btn btn-primary" href="{% url 'learn:index' %}">Aprende sobre el autismo</a>
+                <a class="btn btn-light-soft" href="{% url 'learn:faq' %}">Preguntas frecuentes</a>
+              </div>
+            </div>
+            <div class="slide-img"><img src="{% foto 'nino-corazon.jpg' %}" alt="Un niño sonriente sostiene un corazón de piezas de colores frente a su rostro." width="1200" height="900"></div>
+          </div>
+        </div>
+        <div class="carousel-item" aria-roledescription="diapositiva">
+          <div class="slide-card tone-2">
+            <div class="slide-text">
+              <span class="slide-kicker"><i class="bi bi-chat-heart" aria-hidden="true"></i> Comunicación</span>
+              <h2>Comunicarnos de muchas formas</h2>
+              <p>Pictogramas, agendas visuales y gestos también son lenguaje. Te ayudamos a crear apoyos para casa y para el aula.</p>
+              <div class="slide-actions">
+                <a class="btn btn-primary" href="{% url 'practice:agenda' %}">Crear una agenda visual</a>
+                <a class="btn btn-light-soft" href="{% url 'practice:pictograms' %}">Ver pictogramas</a>
+              </div>
+            </div>
+            <div class="slide-img"><img src="{% foto 'aula-bloques.jpg' %}" alt="Un niño juega con cubos en el aula mientras una docente lo anima." width="1254" height="836" loading="lazy"></div>
+          </div>
+        </div>
+        <div class="carousel-item" aria-roledescription="diapositiva">
+          <div class="slide-card tone-3">
+            <div class="slide-text">
+              <span class="slide-kicker"><i class="bi bi-people" aria-hidden="true"></i> Inclusión</span>
+              <h2>Una comunidad que incluye</h2>
+              <p>Familias, docentes e instituciones podemos construir entornos donde todas las niñas y niños participen.</p>
+              <div class="slide-actions">
+                <a class="btn btn-primary" href="{% url 'core:orientation' %}">Orientación y comunidad</a>
+                <a class="btn btn-light-soft" href="{% url 'directory:index' %}">Directorio</a>
+              </div>
+            </div>
+            <div class="slide-img"><img src="{% foto 'manos-corazon.jpg' %}" alt="Una mano entrega a otra un corazón hecho de piezas de colores." width="554" height="554" loading="lazy"></div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carruselInicio" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Diapositiva anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carruselInicio" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Diapositiva siguiente</span>
+      </button>
+      <button class="carousel-pause" type="button" data-carousel-toggle aria-pressed="false"><i class="bi bi-pause-fill" aria-hidden="true"></i><span class="visually-hidden">Pausar el carrusel</span></button>
+    </div>
+  </div>
+</section>
+
+{# ===== Presentación y tres áreas ===== #}
+<section class="hero hero-compact">
+  <div class="container">
+    <div class="hero-intro">
+      <h1>Estrategias de apoyo <span class="soft">en el autismo</span></h1>
+      <p class="lead">Un espacio de orientación, recursos y aprendizaje para familias, cuidadores y docentes de niñas y niños de 3 a 12 años con autismo, en Milagro y la provincia del Guayas.</p>
+    </div>
+  </div>
+</section>
+
+<section class="pb-4" aria-label="Las tres áreas del sitio">
+  <div class="container">
+    <div class="doors">
+      <article class="door area-1">
+        <img class="door-img" src="{% foto 'cabeza-rompecabezas.jpg' %}" alt="" width="1280" height="560" loading="lazy">
+        <h2>Aprende sobre el autismo</h2>
+        <p>Cápsulas breves con ejemplos cotidianos y fuentes verificables.</p>
+        <ul>{% for c in capsules %}<li><a href="{{ c.get_absolute_url }}">{{ c.title }}</a></li>{% endfor %}</ul>
+        <a class="btn btn-area" href="{% url 'learn:index' %}">Ver todos los temas</a>
+      </article>
+      <article class="door area-2">
+        <img class="door-img" src="{% foto 'nino-mesa-bloques.jpg' %}" alt="" width="430" height="476" loading="lazy">
+        <h2>Herramientas y recursos</h2>
+        <p>Pictogramas, agendas visuales, materiales para imprimir y actividades para casa y el aula.</p>
+        <ul>
+          <li><a href="{% url 'practice:agenda' %}">Crear una agenda visual</a></li>
+          <li><a href="{% url 'practice:materials' %}">Apoyos visuales para imprimir</a></li>
+          <li><a href="{% url 'practice:activities' %}">Actividades por edad y lugar</a></li>
+        </ul>
+        <a class="btn btn-area" href="{% url 'practice:hub' %}">Ir a herramientas y recursos</a>
+      </article>
+      <article class="door area-3">
+        <img class="door-img" src="{% foto 'lazo-manos.jpg' %}" alt="" width="953" height="672" loading="lazy">
+        <h2>Orientación y comunidad</h2>
+        <p>Directorio verificado, entrevistas, recursos audiovisuales e intercambio de materiales.</p>
+        <ul>
+          <li><a href="{% url 'directory:index' %}">Directorio de instituciones ({{ institutions_count }})</a></li>
+          <li><a href="{% url 'interviews:index' %}">Entrevistas</a></li>
+          <li><a href="{% url 'learn:faq' %}">Preguntas frecuentes</a></li>
+        </ul>
+        <a class="btn btn-area" href="{% url 'core:orientation' %}">Ir a orientación y comunidad</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+{# ===== Contenidos destacados ===== #}
+{% if capsules %}
+<section class="section section-white" aria-labelledby="destacados">
+  <div class="container">
+    <div class="section-head"><div><h2 id="destacados" class="mb-1">Contenidos destacados</h2><p>Temas para empezar a comprender, con ejemplos de la vida diaria.</p></div><a class="btn btn-soft btn-sm" href="{% url 'learn:index' %}">Ver todos</a></div>
+    <div class="row g-3">
+      {% for c in capsules %}
+      <div class="col-md-6 col-lg-4">
+        <article class="topic-card area-1">
+          <div class="topic-img"><img src="{% foto_tema c.theme %}" alt="" loading="lazy" width="600" height="380"></div>
+          <div class="topic-body">
+            <span class="chip chip-area">{{ c.get_theme_display }}</span>
+            <h3><a href="{{ c.get_absolute_url }}">{{ c.title }}</a></h3>
+            <p>{{ c.description|truncatewords:20 }}</p>
+            <span class="read-more" aria-hidden="true">Leer más <i class="bi bi-arrow-right"></i></span>
+          </div>
+        </article>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{# ===== Para usar hoy ===== #}
+<section class="section" aria-labelledby="practica">
+  <div class="container">
+    <div class="section-head"><div><h2 id="practica" class="mb-1">Para usar hoy</h2><p>Materiales listos para imprimir y actividades con objetivo, pasos y precauciones.</p></div><a class="btn btn-soft btn-sm" href="{% url 'practice:hub' %}">Ver todo</a></div>
+    <div class="row g-3">
+      {% for obj in materials %}<div class="col-md-6 col-lg-3">{% include "partials/card.html" %}</div>{% endfor %}
+    </div>
+    <div class="row g-3 mt-1">
+      {% for obj in activities %}<div class="col-md-6 col-lg-4">{% include "partials/card.html" %}</div>{% endfor %}
+    </div>
+  </div>
+</section>
+
+{# ===== Entrevistas y experiencias ===== #}
+<section class="section section-white" aria-labelledby="experiencias">
+  <div class="container">
+    <div class="voices">
+      <div class="voices-img"><img src="{% foto 'hablemos-autismo.jpg' %}" alt="Siluetas de una niña y un niño hechas de piezas de colores con el texto «Hablemos de autismo»." width="1400" height="700" loading="lazy"></div>
+      <div class="voices-text">
+        <h2 id="experiencias">Entrevistas y experiencias</h2>
+        <p class="text-soft">Voces de organizaciones que acompañan a familias y docentes, y un espacio para que la comunidad comparta lo que le ha servido.</p>
+        <ul class="voices-list">
+          {% for iv in interviews %}
+            <li><a href="{{ iv.get_absolute_url }}"><i class="bi bi-mic" aria-hidden="true"></i> {{ iv.title }}</a></li>
+          {% empty %}
+            <li><a href="{% url 'interviews:index' %}"><i class="bi bi-mic" aria-hidden="true"></i> {% if upcoming_interview %}Entrevista en preparación: contenido próximamente{% else %}Entrevistas con organizaciones{% endif %}</a></li>
+          {% endfor %}
+          <li><a href="{% url 'exchange:index' %}"><i class="bi bi-arrow-left-right" aria-hidden="true"></i> Intercambio de materiales{% if exchange_count %} ({{ exchange_count }}){% endif %}</a></li>
+          <li><a href="{% url 'practice:materials' %}?origen=comunidad"><i class="bi bi-people" aria-hidden="true"></i> Materiales compartidos por familias y docentes</a></li>
+        </ul>
+        <a class="btn btn-primary" href="{% url 'contributions:index' %}">Compartir mi experiencia o un material</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ===== Accesos directos ===== #}
+<section class="section" aria-labelledby="herramientas">
+  <div class="container">
+    <h2 id="herramientas" class="mb-3">Accesos directos</h2>
+    <div class="shortcuts">
+      <a class="shortcut" href="{% url 'practice:agenda' %}"><img src="{% picto '1f5d3' %}" alt=""><span>Agenda visual</span></a>
+      <a class="shortcut" href="{% url 'practice:pictograms' %}"><img src="{% picto '1f600' %}" alt=""><span>Pictogramas</span></a>
+      <a class="shortcut" href="{% url 'practice:materials' %}"><img src="{% picto '1f4cb' %}" alt=""><span>Materiales para imprimir</span></a>
+      <a class="shortcut" href="{% url 'practice:activities' %}?lugar=escuela"><img src="{% picto '1f3eb' %}" alt=""><span>Estrategias para el aula</span></a>
+      <a class="shortcut" href="{% url 'practice:videos' %}"><img src="{% picto '1f4fa' %}" alt=""><span>Videos recomendados</span></a>
+      <a class="shortcut" href="{% url 'directory:index' %}"><img src="{% picto '1f3db' %}" alt=""><span>Directorio</span></a>
+    </div>
+  </div>
+</section>
+
+{% if topics %}
+<section class="section pt-0" aria-labelledby="temas">
+  <div class="container">
+    <h2 id="temas" class="mb-3">Explorar por tema</h2>
+    <p class="text-soft">Cada tema reúne la explicación, las actividades, los materiales y las fuentes relacionadas.</p>
+    <div class="d-flex flex-wrap gap-2">{% for t in topics %}<a class="btn btn-soft" href="{{ t.get_absolute_url }}">{% if t.pictogram %}<img class="picto" src="{% picto t.pictogram %}" alt=""> {% endif %}{{ t.name }}</a>{% endfor %}</div>
+    {% include "partials/disclaimer.html" %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}

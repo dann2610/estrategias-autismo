@@ -1,0 +1,21 @@
+{% extends "base.html" %}{% load ui %}
+{% block title %}{{ obj.title }}{% endblock %}
+{% block content %}
+{% url 'interviews:index' as list_url %}
+{% include "partials/page_head.html" with area="3" area_label="Entrevistas" area_url=list_url picto="1f399" heading=obj.title intro=obj.description %}
+<div class="container py-4 area-3">
+  <div class="row g-4">
+    <article class="col-lg-8"><div class="capsule-body">
+      {% if obj.youtube_id %}<div class="ratio ratio-16x9 mb-3"><iframe src="https://www.youtube-nocookie.com/embed/{{ obj.youtube_id }}" title="{{ obj.title }}" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>{% endif %}
+      {% if obj.media_url %}<p><a class="btn btn-area btn-sm" href="{{ obj.media_url }}" target="_blank" rel="noopener noreferrer">Ver o escuchar la entrevista</a></p>{% endif %}
+      <h2>La organización</h2><p>{{ obj.organization_description|linebreaksbr }}</p>{% if obj.organization_source %}<p class="small">Fuente: <a href="{{ obj.organization_source }}" target="_blank" rel="noopener noreferrer">{{ obj.organization_source|truncatechars:70 }}</a></p>{% endif %}
+      <h2>Resumen</h2><p>{{ obj.summary|linebreaksbr }}</p>
+      {% if questions %}<h2>Preguntas y respuestas</h2>{% for q in questions %}<h3 class="h6 mt-3">{{ q.question }}</h3><p>{{ q.answer|linebreaksbr }}</p>{% endfor %}{% endif %}
+      {% if obj.transcript %}<details class="mt-3"><summary class="fw-semibold">Transcripción completa</summary><div class="mt-2">{{ obj.transcript|linebreaks }}</div></details>{% endif %}
+      {% if obj.references %}<h2>Referencias complementarias</h2><ul class="refs">{% for r in obj.references|lines %}<li>{{ r|urlize }}</li>{% endfor %}</ul>{% endif %}
+      {% if not obj.is_public %}<div class="callout mt-3 small">Vista previa para moderación: {% for p in obj.publication_problems %}{{ p }} {% endfor %}</div>{% endif %}
+    </div></article>
+    <aside class="col-lg-4"><div class="side area-3"><dl class="facts"><dt>Organización</dt><dd>{{ obj.organization_name|default:"Por confirmar" }}</dd><dt>Entrevista a</dt><dd>{{ obj.interviewee_name|default:"Por confirmar" }}{% if obj.interviewee_role %}, {{ obj.interviewee_role }}{% endif %}</dd><dt>Fecha</dt><dd>{{ obj.interview_date|date:"d/m/Y"|default:"Por confirmar" }}</dd><dt>Autorización</dt><dd>{% if obj.authorization_confirmed %}Publicada con autorización{% else %}Pendiente{% endif %}</dd></dl>{% include "partials/detail_actions.html" %}</div></aside>
+  </div>
+</div>
+{% endblock %}

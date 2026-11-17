@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Apoyos visuales y materiales{% endblock %}
+{% block content %}
+{% url 'practice:hub' as hub %}
+{% include "partials/page_head.html" with area="2" area_label="Actividades y recursos" area_url=hub picto="1f4cb" heading="Apoyos visuales y materiales" image="img/fotos/ilustracion-nina.jpg" image_alt="Dibujo de una niña sentada rodeada de corazones de rompecabezas." intro="Agendas, secuencias, tarjetas y tableros listos para imprimir, y materiales compartidos por la comunidad." %}
+<div class="container py-4 area-2">{% include "partials/filters.html" %}{% include "partials/grid.html" %}
+<p class="small text-soft mt-3">¿Creaste un material útil? <a href="{% url 'contributions:create' 'material' %}">Compártelo</a>; se publicará después de revisarlo.</p></div>
+{% endblock %}

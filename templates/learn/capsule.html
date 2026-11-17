@@ -1,0 +1,86 @@
+{% extends "base.html" %}{% load ui static %}
+{% block title %}{{ obj.title }}{% endblock %}
+{% block description %}{{ obj.description|truncatewords:30 }}{% endblock %}
+{% block content %}
+<section class="page-head area-1 has-image">
+  <div class="container">
+    <div class="page-head-grid">
+      <div>
+        <nav aria-label="Ruta de navegación"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="{% url 'learn:index' %}">Aprende sobre el autismo</a></li><li class="breadcrumb-item active" aria-current="page">{{ obj.get_theme_display }}</li></ol></nav>
+        <h1 class="mb-2">{{ obj.title }}</h1>
+        <p class="lead mb-0">{{ obj.description }}</p>
+      </div>
+      <img class="page-head-img photo" src="{% foto_tema obj.theme %}" alt="" width="600" height="400">
+    </div>
+  </div>
+</section>
+<div class="container py-4">
+  <div class="row g-4">
+    <article class="col-lg-8">
+      <div class="capsule-body">
+        <h2>¿De qué se trata?</h2>
+        {% for p in obj.explanation|paragraphs %}<p>{{ p|linebreaksbr }}</p>{% endfor %}
+
+        {% if obj.visual_image %}
+          <figure class="figure-box"><img class="img-fluid rounded" src="{{ obj.visual_image.url }}" alt="{{ obj.visual_alt }}">{% if obj.visual_caption %}<figcaption>{{ obj.visual_caption }}</figcaption>{% endif %}</figure>
+        {% elif obj.visual %}
+          <figure class="figure-box" aria-labelledby="visual-cap">{% include "learn/visuals/"|add:obj.visual|add:".html" %}<figcaption id="visual-cap">{{ obj.visual_caption|default:obj.get_visual_display }}</figcaption></figure>
+        {% else %}
+          <div class="figure-pending my-4" role="note"><strong>Recurso visual pendiente.</strong><br>Estamos preparando una ilustración o infografía para esta cápsula.</div>
+        {% endif %}
+
+        <h2>¿Por qué es importante para familias y docentes?</h2>
+        {% for p in obj.importance|paragraphs %}<p>{{ p|linebreaksbr }}</p>{% endfor %}
+
+        <h2>En la vida cotidiana</h2>
+        <ul class="examples">{% for e in obj.examples|lines %}<li>{{ e }}</li>{% endfor %}</ul>
+
+        <section class="bridge" aria-labelledby="practica">
+          <h2 id="practica"><img class="picto" src="{% picto '1f3a8' %}" alt="">De la explicación a la práctica</h2>
+          <p class="mb-0">{{ obj.practice_intro }}</p>
+          <div class="bridge-grid">
+            {% for a in activities %}<a class="bridge-item" href="{{ a.get_absolute_url }}"><img src="{% picto '1f3a8' %}" alt=""><span><strong>{{ a.title }}</strong><span>Actividad, {{ a.get_age_range_display|lower }}</span></span></a>{% endfor %}
+            {% for m in materials %}<a class="bridge-item" href="{{ m.get_absolute_url }}"><img src="{% picto '1f4cb' %}" alt=""><span><strong>{{ m.title }}</strong><span>{{ m.get_kind_display }}{% if m.is_printable %}, listo para imprimir{% endif %}</span></span></a>{% endfor %}
+            {% for v in videos %}<a class="bridge-item" href="{{ v.get_absolute_url }}"><img src="{% picto '1f4fa' %}" alt=""><span><strong>{{ v.title }}</strong><span>Recurso audiovisual de {{ v.publisher }}</span></span></a>{% endfor %}
+          </div>
+          {% if obj.action %}<a class="btn btn-area mt-3" href="{{ obj.action_url }}">{{ obj.get_action_display }}</a>{% endif %}
+          {% if more_activities %}<p class="small mt-3 mb-0">También te puede servir: {% for a in more_activities %}<a href="{{ a.get_absolute_url }}">{{ a.title }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}.</p>{% endif %}
+        </section>
+
+        <div class="notes">
+          <div class="do"><h2>Recomendaciones</h2><ul>{% for r in obj.recommendations|lines %}<li>{{ r }}</li>{% endfor %}</ul></div>
+          <div class="careful"><h2>Precauciones</h2><ul>{% for r in obj.precautions|lines %}<li>{{ r }}</li>{% endfor %}</ul></div>
+        </div>
+
+        <h2>Fuentes</h2>
+        <ul class="refs">{% for s in obj.sources.all %}<li>{{ s.citation }}{% if s.url %} <a href="{{ s.url }}" target="_blank" rel="noopener noreferrer">{{ s.url }}</a>{% endif %}</li>{% endfor %}</ul>
+        <p class="small text-soft mb-0">Revisado el {{ obj.revised_on|date:"j \d\e F \d\e Y" }}.{% if obj.professional_review %} Revisión profesional: {{ obj.professional_review }}.{% else %} Pendiente de revisión por un profesional de la salud o la educación.{% endif %}</p>
+      </div>
+
+      <section class="capsule-body mt-4" id="comentarios" aria-labelledby="comentarios-titulo">
+        <h2 id="comentarios-titulo">Comentarios y preguntas</h2>
+        <p class="small text-soft">Comparte una duda o una experiencia relacionada con este tema. Todos los comentarios se revisan antes de publicarse. No incluyas nombres, fotos ni datos clínicos de niñas y niños. <a href="{% url 'core:rules' %}">Normas de convivencia</a>.</p>
+        {% for c in comments %}<div class="py-2 border-bottom" id="comentario-{{ c.pk }}"><p class="mb-1">{{ c.description|linebreaksbr }}</p><small class="text-soft">{{ c.author.public_name|default:"Miembro de la comunidad" }}, {{ c.created_at|date:"d/m/Y" }} · <a href="{% url 'reports:create_for' c.model_key c.pk %}">Reportar</a></small></div>{% empty %}<p class="text-soft">Aún no hay comentarios publicados.</p>{% endfor %}
+        {% for c in own_pending %}<div class="callout small mt-2">Tu comentario está «{{ c.get_status_display|lower }}»: {{ c.description|truncatewords:12 }}</div>{% endfor %}
+        {% if obj.is_public and comments_enabled %}
+          {% if user.is_authenticated %}<form method="post" action="{% url 'comments:add' obj.pk %}" class="mt-3" novalidate>{% csrf_token %}{% with form=comment_form %}{% include "partials/form.html" %}{% endwith %}<button class="btn btn-primary btn-sm" type="submit">Enviar a revisión</button></form>
+          {% else %}<p class="mt-3 mb-0"><a href="{% url 'accounts:login' %}?next={{ request.path }}">Ingresa</a> para comentar.</p>{% endif %}
+        {% endif %}
+      </section>
+    </article>
+    <aside class="col-lg-4" aria-label="Información de la cápsula">
+      <div class="side area-1">
+        <dl class="facts"><dt>Tema</dt><dd>{{ obj.get_theme_display }}</dd><dt>Revisada</dt><dd>{{ obj.revised_on|date:"d/m/Y" }}</dd><dt>Fuentes</dt><dd>{{ obj.sources.count }}</dd></dl>
+        {% if obj.topics.all %}<div class="chips mt-3">{% for t in obj.topics.all %}<a class="chip chip-area text-decoration-none" href="{{ t.get_absolute_url }}">{{ t.name }}</a>{% endfor %}</div>{% endif %}
+        {% include "partials/detail_actions.html" %}
+      </div>
+      <nav class="side mt-3 small" aria-label="Otras cápsulas">
+        {% if prev %}<p class="mb-2">Anterior: <a href="{{ prev.get_absolute_url }}">{{ prev.title }}</a></p>{% endif %}
+        {% if next %}<p class="mb-0">Siguiente: <a href="{{ next.get_absolute_url }}">{{ next.title }}</a></p>{% endif %}
+        {% if not prev and not next %}<a href="{% url 'learn:index' %}">Ver todas las cápsulas</a>{% endif %}
+      </nav>
+    </aside>
+  </div>
+  {% include "partials/disclaimer.html" %}
+</div>
+{% endblock %}

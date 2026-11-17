@@ -1,0 +1,42 @@
+{% extends "base.html" %}{% load static %}
+{% block title %}Crear una agenda visual{% endblock %}
+{% block content %}
+{% url 'practice:hub' as hub %}
+<div class="no-print">{% include "partials/page_head.html" with area="2" area_label="Actividades y recursos" area_url=hub picto="1f5d3" heading="Crear una agenda visual" intro="Elige los pasos de una rutina, ordénalos y cambia los textos si quieres. Luego imprímela o guárdala como PDF." %}</div>
+<div class="container py-4 area-2">
+  <div class="agenda-tool">
+    <section class="no-print" aria-labelledby="banco">
+      <h2 id="banco" class="h5">1. Elige pictogramas</h2>
+      <div class="d-flex flex-wrap gap-2 mb-2" role="group" aria-label="Plantillas rápidas">
+        <button class="btn btn-soft btn-sm" type="button" data-template="manana">Rutina de la mañana</button>
+        <button class="btn btn-soft btn-sm" type="button" data-template="noche">Rutina de la noche</button>
+        <button class="btn btn-soft btn-sm" type="button" data-template="escuela">Un día en la escuela</button>
+      </div>
+      <div class="d-flex flex-wrap gap-2 mb-2" role="group" aria-label="Categorías">
+        <button class="btn btn-sm btn-area" type="button" data-cat="">Todos</button>
+        {% for v, l in categories %}<button class="btn btn-sm btn-soft" type="button" data-cat="{{ v }}">{{ l }}</button>{% endfor %}
+      </div>
+      <label class="visually-hidden" for="buscar-picto">Buscar pictograma</label>
+      <input id="buscar-picto" class="form-control mb-3" type="search" placeholder="Buscar: baño, comer, feliz…">
+      <div class="picto-grid" id="banco-grid"></div>
+      <p class="small text-soft mt-3">Pictogramas de {{ credit }}, licencia <a href="{{ license_url }}" target="_blank" rel="noopener noreferrer">{{ license }}</a>.</p>
+    </section>
+    <section class="agenda-sheet" id="hoja" aria-labelledby="titulo-agenda-label">
+      <h2 class="h5 no-print" id="titulo-agenda-label">2. Tu agenda</h2>
+      <label class="visually-hidden" for="titulo-agenda">Título de la agenda</label>
+      <input id="titulo-agenda" class="form-control form-control-lg mb-3 fw-semibold" value="Mi rutina" maxlength="60">
+      <ol class="agenda-list" id="lista"></ol>
+      <p class="agenda-empty" id="vacia">Toca un pictograma para agregarlo aquí.</p>
+      <div class="d-flex flex-wrap gap-2 mt-3 no-print">
+        <button class="btn btn-area" type="button" id="imprimir"><i class="bi bi-printer" aria-hidden="true"></i> Imprimir o guardar PDF</button>
+        <button class="btn btn-soft" type="button" id="orientacion" aria-pressed="false">Ver en horizontal</button>
+        <button class="btn btn-soft" type="button" id="limpiar">Vaciar</button>
+      </div>
+      <p class="small text-soft mt-2 no-print" id="estado" aria-live="polite"></p>
+    </section>
+  </div>
+  <div class="callout mt-4 small no-print">Muestra la agenda antes de empezar y señala cada paso al cumplirlo. Si algo cambia, avísalo con anticipación. Para entender por qué las agendas ayudan, lee las <a href="{% url 'learn:index' %}">cápsulas de «Aprende sobre el autismo»</a>.</div>
+</div>
+{{ pictogram_data|json_script:"pictos" }}
+{% endblock %}
+{% block scripts %}<script src="{% static 'js/agenda.js' %}"></script>{% endblock %}

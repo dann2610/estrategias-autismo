@@ -1,0 +1,6 @@
+{% extends "accounts/_narrow.html" %}{% block title %}Editar perfil{% endblock %}
+{% block body %}<h1 class="h2">Mi perfil</h1>
+<form method="post" novalidate>{% csrf_token %}{% with form=uform %}{% include "partials/form.html" %}{% endwith %}{% with form=pform %}{% include "partials/form.html" %}{% endwith %}
+<div class="d-flex gap-2"><button class="btn btn-primary" type="submit">Guardar cambios</button><a class="btn btn-soft" href="{% url 'accounts:panel' %}">Cancelar</a></div></form>
+<hr><a href="{% url 'accounts:password_change' %}">Cambiar contraseña</a>
+{% endblock %}

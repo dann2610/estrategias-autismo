@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Intercambio de materiales{% endblock %}
+{% block content %}
+{% url 'core:orientation' as o_url %}
+{% include "partials/page_head.html" with area="3" area_label="Orientación y comunidad" area_url=o_url picto="1f4e6" heading="Intercambio de materiales educativos y de apoyo" image="img/fotos/ilustracion-rompecabezas.jpg" image_alt="Dibujo de piezas de rompecabezas con caras de niños y corazones." intro="Un espacio voluntario para que familias y docentes ofrezcan o busquen libros, juegos y materiales de apoyo. Cada publicación se revisa antes de aparecer." %}
+<div class="container py-4 area-3">
+  <div class="callout mb-3 small"><strong>Importante:</strong> el proyecto no entrega materiales ni garantiza intercambios; solo conecta a personas que publican de forma voluntaria. Lee las <a href="{% url 'exchange:rules' %}">reglas de participación</a> antes de contactar a alguien.</div>
+  <div class="d-flex justify-content-end mb-3"><a class="btn btn-area btn-sm" href="{% url 'contributions:create' 'intercambio' %}">Publicar en el intercambio</a></div>
+  {% include "partials/filters.html" %}
+  {% if page_obj.object_list %}<div class="row g-3">{% for obj in page_obj %}<div class="col-md-6 col-lg-4">{% include "partials/card.html" %}</div>{% endfor %}</div>{% include "partials/pagination.html" %}
+  {% else %}<div class="empty"><h2 class="h5">Todavía no hay publicaciones disponibles</h2><p class="text-soft mb-3">Cuando alguien ofrezca o busque un material, aparecerá aquí después de la revisión.</p><a class="btn btn-area btn-sm" href="{% url 'contributions:create' 'intercambio' %}">Publicar el primero</a></div>{% endif %}
+</div>
+{% endblock %}

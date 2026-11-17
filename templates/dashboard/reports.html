@@ -1,0 +1,10 @@
+{% extends "dashboard/base_dash.html" %}{% block title %}Reportes{% endblock %}
+{% block dash %}<h1 class="h2">Reportes de usuarios</h1>
+<nav class="d-flex gap-2 my-3">{% for v, l in states %}<a class="btn btn-sm {% if state == v %}btn-primary{% else %}btn-soft{% endif %}" href="?estado={{ v }}">{{ l }}</a>{% endfor %}</nav>
+{% for r in page_obj %}<div class="side mb-3"><div class="d-flex justify-content-between flex-wrap gap-2"><strong>{{ r.get_reason_display }}</strong><small class="text-soft">{{ r.created_at|date:"d/m/Y H:i" }} · {{ r.reporter.email|default:"cuenta eliminada" }}</small></div>
+<p class="mb-1">{{ r.details }}</p>
+{% if r.item %}<p class="small mb-2">Contenido: <a href="{% url 'dashboard:review' r.item.model_key r.item.pk %}">{{ r.item.title }}</a></p>{% elif r.reference %}<p class="small mb-2">Referencia: {{ r.reference }}</p>{% endif %}
+{% if r.state == 'abierto' %}<form method="post" action="{% url 'dashboard:resolve_report' r.pk %}" class="row g-2 align-items-end">{% csrf_token %}<div class="col-md"><label class="form-label small" for="res{{ r.pk }}">Resolución</label><input class="form-control form-control-sm" id="res{{ r.pk }}" name="resolucion"></div><div class="col-auto d-flex gap-2"><button class="btn btn-primary btn-sm" name="estado" value="resuelto">Marcar resuelto</button><button class="btn btn-soft btn-sm" name="estado" value="descartado">Descartar</button></div></form>
+{% else %}<p class="small text-soft mb-0">{{ r.get_state_display }} por {{ r.resolved_by.email }} el {{ r.resolved_at|date:"d/m/Y" }}. {{ r.resolution }}</p>{% endif %}</div>
+{% empty %}<div class="empty">No hay reportes en este estado.</div>{% endfor %}
+{% include "partials/pagination.html" %}{% endblock %}

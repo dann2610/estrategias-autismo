@@ -1,0 +1,24 @@
+{% load static ui %}<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ obj.title }} · Para imprimir</title>
+<link rel="stylesheet" href="{% static 'vendor/fonts/fonts.css' %}"><link rel="stylesheet" href="{% static 'css/print.css' %}"></head>
+<body class="layout-{{ obj.layout }}">
+<div class="bar no-print"><a href="{{ obj.get_absolute_url }}">Volver a la ficha del material</a><button type="button" data-print>Imprimir o guardar como PDF</button></div>
+<main class="sheet">
+  <h1>{{ obj.title }}</h1>
+  {% if obj.layout == "primero" %}
+    <div class="first-then">
+      {% for it in items|slice:":2" %}<section><h2>{% if forloop.first %}Primero{% else %}Después{% endif %}</h2><img src="{{ it.pictogram.src }}" alt=""><p>{{ it.text }}</p></section>{% endfor %}
+    </div>
+  {% elif obj.layout == "tarjeta" %}
+    {% for it in items|slice:":1" %}<section class="big-card"><img src="{{ it.pictogram.src }}" alt=""><p>{{ it.text }}</p></section>{% endfor %}
+  {% elif obj.layout == "ficha" %}
+    <p class="hint">Complétala con la familia y compártela con la escuela o los profesionales que acompañan a la niña o al niño.</p>
+    {% for p in prompts %}<section class="prompt"><h2>{{ p }}</h2><div class="lines"><span></span><span></span><span></span></div></section>{% endfor %}
+  {% else %}
+    <ol class="cards">{% for it in items %}<li><img src="{{ it.pictogram.src }}" alt=""><span>{{ it.text }}</span></li>{% endfor %}</ol>
+  {% endif %}
+  <footer>Estrategias de apoyo en el autismo. Pictogramas: {{ items.0.pictogram.credit|default:"Twemoji, © Twitter, Inc. y otros colaboradores" }}, licencia {{ items.0.pictogram.license|default:"CC BY 4.0" }}.</footer>
+</main>
+<script src="{% static 'js/app.js' %}"></script>
+</body></html>

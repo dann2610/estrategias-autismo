@@ -1,0 +1,30 @@
+{% extends "base.html" %}{% load static %}
+{% block header %}{% endblock %}{% block footer %}{% endblock %}
+{% block content %}
+<div class="dash">
+  <nav class="dash-nav" aria-label="Menú de administración">
+    <a class="brand-link mb-3" href="{% url 'core:home' %}"><img src="{% static 'img/marca.svg' %}" alt="" width="40" height="20"> Ir al sitio</a>
+    {% with u=request.resolver_match.url_name %}
+    <a href="{% url 'dashboard:home' %}" class="{% if u == 'home' %}active{% endif %}"><i class="bi bi-speedometer2" aria-hidden="true"></i>Resumen general</a>
+    <a href="{% url 'dashboard:inbox' %}" class="{% if u == 'inbox' or u == 'review' %}active{% endif %}"><i class="bi bi-hourglass-split" aria-hidden="true"></i>Publicaciones pendientes</a>
+    <a href="{% url 'dashboard:reports' %}" class="{% if u == 'reports' %}active{% endif %}"><i class="bi bi-flag" aria-hidden="true"></i>Reportes de usuarios</a>
+    {% if user_can_manage_users %}<a href="{% url 'dashboard:users' %}" class="{% if u == 'users' %}active{% endif %}"><i class="bi bi-people" aria-hidden="true"></i>Gestión de cuentas</a>{% endif %}
+    {% if user_can_view_stats %}<a href="{% url 'dashboard:stats' %}" class="{% if u == 'stats' %}active{% endif %}"><i class="bi bi-bar-chart" aria-hidden="true"></i>Estadísticas</a>{% endif %}
+    <a href="{% url 'dashboard:history' %}" class="{% if u == 'history' %}active{% endif %}"><i class="bi bi-clock-history" aria-hidden="true"></i>Historial de moderación</a>
+    <a href="{% url 'dashboard:audit' %}" class="{% if u == 'audit' %}active{% endif %}"><i class="bi bi-journal-check" aria-hidden="true"></i>Registro de auditoría</a>
+    <a href="{% url 'dashboard:quality' %}" class="{% if u == 'quality' %}active{% endif %}"><i class="bi bi-clipboard2-check" aria-hidden="true"></i>Calidad del contenido</a>
+    {% endwith %}
+    <hr class="border-light opacity-25">
+    <a href="{% url 'admin:index' %}"><i class="bi bi-database-gear" aria-hidden="true"></i>Contenidos (Django Admin)</a>
+    <a href="{% url 'admin:learn_capsule_changelist' %}"><i class="bi bi-lightbulb" aria-hidden="true"></i>Cápsulas</a>
+    <a href="{% url 'admin:interviews_interview_changelist' %}"><i class="bi bi-mic" aria-hidden="true"></i>Entrevistas</a>
+    <a href="{% url 'admin:directory_institution_changelist' %}"><i class="bi bi-building" aria-hidden="true"></i>Directorio</a>
+    <a href="{% url 'admin:core_topic_changelist' %}"><i class="bi bi-tags" aria-hidden="true"></i>Temas y fuentes</a>
+    <a href="{% url 'admin:core_siteconfig_changelist' %}"><i class="bi bi-gear" aria-hidden="true"></i>Configuración</a>
+  </nav>
+  <div class="dash-main" id="dash">
+    {% include "partials/messages.html" %}
+    {% block dash %}{% endblock %}
+  </div>
+</div>
+{% endblock %}

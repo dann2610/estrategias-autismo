@@ -1,0 +1,5 @@
+{% extends "accounts/_narrow.html" %}{% block title %}{{ title }}{% endblock %}
+{% block body %}<h1 class="h2">{{ title }}</h1>{% if intro %}<p class="text-soft">{{ intro }}</p>{% endif %}
+{% if validlink is False %}<p>El enlace ya no es válido. Solicita uno nuevo.</p><a class="btn btn-primary" href="{% url 'accounts:password_reset' %}">Solicitar enlace</a>
+{% else %}<form method="post" novalidate>{% csrf_token %}{% include "partials/form.html" %}<button class="btn btn-primary w-100" type="submit">Guardar</button></form>{% endif %}
+{% endblock %}

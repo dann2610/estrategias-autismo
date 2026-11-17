@@ -1,0 +1,4 @@
+{% extends "dashboard/base_dash.html" %}{% block title %}Eliminar{% endblock %}
+{% block dash %}<div class="detail-body measure"><h1 class="h3">¿Eliminar «{{ obj.title }}»?</h1><p>Esta acción es permanente y quedará registrada en la auditoría. Si solo quieres ocultarlo, usa «Archivar».</p>
+<form method="post">{% csrf_token %}<input type="hidden" name="confirmar" value="si"><label class="form-label" for="motivo">Motivo (queda en el registro)</label><textarea class="form-control mb-3" id="motivo" name="motivo" rows="3" required></textarea>
+<div class="d-flex gap-2"><button class="btn btn-primary">Sí, eliminar definitivamente</button><a class="btn btn-soft" href="{% url 'dashboard:review' obj.model_key obj.pk %}">Cancelar</a></div></form></div>{% endblock %}
