@@ -19,6 +19,6 @@ services:
       - key: SITE_CONTACT_EMAIL
         value: "contacto@ejemplo.org"
       - key: ADMIN_EMAIL
-        sync: false
+        value: "admin@estrategias-autismo.ec"
       - key: ADMIN_PASSWORD
-        sync: false
+        value: "Estrategias-Tea-2026!"
