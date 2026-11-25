@@ -5,4 +5,11 @@
   <h3><a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a></h3>
   <p>{{ obj.description|truncatewords:22 }}</p>
   {% card_chips obj as chips %}{% if chips %}<div class="chips">{% for c in chips %}<span class="chip">{{ c }}</span>{% endfor %}</div>{% endif %}
+  {% if obj.model_key == "practice.material" %}
+  <div class="card-actions">
+    <a class="btn btn-soft btn-sm" href="{{ obj.get_absolute_url }}">Ver ficha</a>
+    {% if obj.is_printable %}<a class="btn btn-area btn-sm" href="{% url 'practice:material_print' obj.pk %}"><i class="bi bi-download" aria-hidden="true"></i> Descargar PDF</a>
+    {% elif obj.file %}<a class="btn btn-area btn-sm" href="{% file_url obj 'file' %}"><i class="bi bi-download" aria-hidden="true"></i> Descargar PDF</a>{% endif %}
+  </div>
+  {% endif %}
 </article>

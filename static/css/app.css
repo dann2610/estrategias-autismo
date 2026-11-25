@@ -407,3 +407,8 @@ button.picto-card:hover { border-color: var(--a2); background: var(--a2-mist); }
   .brand-name small { font-size: .72rem; }
   .site-header .btn-sm { padding: .36rem .75rem; }
 }
+
+/* Elementos de los bocetos (entrega 4) */
+.card-actions { position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: .5rem; margin-top: auto; padding-top: .9rem; }
+.share-box { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 1.2rem 1.4rem; }
+.capsule-nav { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: space-between; }

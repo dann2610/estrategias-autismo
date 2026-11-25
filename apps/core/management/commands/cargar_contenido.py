@@ -372,6 +372,14 @@ INSTITUTIONS = [
          website="https://guayas.gob.ec", cost="gratuito", basis="informacion_publica",
          evidence_url="https://guayas.gob.ec/el-centro-integral-de-terapias-aumenta-a-660-el-numero-de-usuarios/",
          note="Información publicada por la Prefectura del Guayas el 17 de julio de 2023. Tiene más de dos años: confirmar su vigencia, ubicación y requisitos antes de acudir."),
+    dict(title="Centro Psicoeducativo Integral Isaac", kind="terapeutico", province="Guayas", canton="Guayaquil",
+         description="Centro de Guayaquil que brinda atención terapéutica y educativa a niñas, niños y jóvenes con autismo. Un trabajo de titulación de la ESPOL lo describe como una de las primeras organizaciones de la ciudad en atender el autismo.",
+         services="Atención terapéutica para personas con autismo\nAtención educativa (psicoeducativa)",
+         population="Niñas, niños y jóvenes con autismo y sus familias",
+         address="Sector La Alborada, Guayaquil (según prensa; confirmar la dirección actual)",
+         website="https://www.centroisaac.com", cost="no_informado", basis="informacion_publica",
+         evidence_url="https://www.centroisaac.com/centro-autismo-guayaquil",
+         note="Información del sitio oficial del centro y de fuentes públicas (diario El Universo; trabajos de titulación de la ESPOL). Confirmar dirección, servicios, horarios y costos directamente con el centro."),
     dict(title="Calificación de discapacidad: Ministerio de Salud Pública", kind="tramite", province="Todo el país",
          canton="Establecimientos de salud de primer nivel del MSP",
          description="Trámite oficial y gratuito para obtener el certificado de calificación o recalificación de discapacidad. Requiere solicitud firmada, cédula o pasaporte y un informe médico o psicológico de profesionales habilitados que trabajen en la Red Pública Integral de Salud o en la Red Privada Complementaria.",
@@ -405,7 +413,7 @@ FAQS = [
 
 INTERVIEW_QUESTIONS = [
     ("necesidades", "¿Cuáles son las dudas más frecuentes de las familias cuando reciben un diagnóstico de autismo?"),
-    ("necesidades", "¿Qué necesidades de las familias de Milagro y del Guayas siguen sin respuesta?"),
+    ("necesidades", "¿Qué necesidades de las familias del Guayas siguen sin respuesta?"),
     ("recursos", "¿Qué recursos educativos han visto que funcionan mejor en casa?"),
     ("recursos", "¿Qué recomiendan a las familias que quieren empezar a usar apoyos visuales?"),
     ("inclusion", "¿Qué pueden hacer las escuelas para recibir mejor a estudiantes autistas?"),

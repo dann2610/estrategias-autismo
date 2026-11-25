@@ -23,6 +23,10 @@
         {% if obj.social %}<dt>Red social</dt><dd><a href="{{ obj.social }}" target="_blank" rel="noopener noreferrer">Perfil oficial</a></dd>{% endif %}
         <dt>Revisado</dt><dd>{{ obj.last_reviewed|date:"d/m/Y" }}</dd>
       </dl>
+      <div class="d-flex flex-wrap gap-2 mt-3">
+        <a class="btn btn-area btn-sm" href="https://www.google.com/maps/search/?api=1&amp;query={{ obj.title|urlencode }}%20{{ obj.canton|urlencode }}" target="_blank" rel="noopener noreferrer"><i class="bi bi-geo-alt" aria-hidden="true"></i> Cómo llegar</a>
+        {% with numero=obj.phone|tel %}{% if numero %}<a class="btn btn-soft btn-sm" href="tel:{{ numero }}"><i class="bi bi-telephone" aria-hidden="true"></i> Llamar</a>{% endif %}{% endwith %}
+      </div>
       {% include "partials/detail_actions.html" %}
     </div></aside>
   </div>

@@ -1,3 +1,11 @@
+# Blueprint de Render: crea la base de datos PostgreSQL y el servicio web.
+# En Render: New + > Blueprint > elegir este repositorio.
+databases:
+  - name: estrategias-autismo-db
+    plan: free
+    databaseName: estrategias_autismo
+    user: estrategias_autismo
+
 services:
   - type: web
     name: estrategias-autismo
@@ -8,6 +16,10 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: "3.12.7"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: estrategias-autismo-db
+          property: connectionString
       - key: DJANGO_SECRET_KEY
         generateValue: true
       - key: DJANGO_DEBUG
@@ -19,6 +31,6 @@ services:
       - key: SITE_CONTACT_EMAIL
         value: "contacto@ejemplo.org"
       - key: ADMIN_EMAIL
-        value: "admin@estrategias-autismo.ec"
+        sync: false
       - key: ADMIN_PASSWORD
-        value: "Estrategias-Tea-2026!"
+        sync: false

@@ -4,5 +4,9 @@
 {% url 'practice:hub' as hub %}
 {% include "partials/page_head.html" with area="2" area_label="Actividades y recursos" area_url=hub picto="1f4cb" heading="Apoyos visuales y materiales" image="img/fotos/ilustracion-nina.jpg" image_alt="Dibujo de una niña sentada rodeada de corazones de rompecabezas." intro="Agendas, secuencias, tarjetas y tableros listos para imprimir, y materiales compartidos por la comunidad." %}
 <div class="container py-4 area-2">{% include "partials/filters.html" %}{% include "partials/grid.html" %}
-<p class="small text-soft mt-3">¿Creaste un material útil? <a href="{% url 'contributions:create' 'material' %}">Compártelo</a>; se publicará después de revisarlo.</p></div>
+<div class="share-box mt-4">
+  <div><h2 class="h5 mb-1">¿Tienes un material que te funcionó?</h2><p class="small text-soft mb-0">Compártelo con otras familias y docentes. Se publica después de revisarlo.</p></div>
+  <a class="btn btn-area" href="{% url 'contributions:create' 'material' %}">Compartir material</a>
+</div>
+</div>
 {% endblock %}

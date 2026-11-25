@@ -181,3 +181,11 @@ def foto_obj(obj):
         return static(f"img/fotos/{FOTOS_TEMA[obj.theme][0]}")
     opciones = FOTOS_MODULO.get(key, ["corazon-rompecabezas.jpg"])
     return static(f"img/fotos/{opciones[(getattr(obj, 'pk', 0) or 0) % len(opciones)]}")
+
+
+@register.filter
+def tel(value):
+    """Extrae un número marcable (+593 4 372 7600 -> +59343727600) para enlaces tel:."""
+    import re
+    m = re.search(r"\+?\d[\d\s-]{1,}\d", value or "")
+    return re.sub(r"[\s-]", "", m.group(0)) if m else ""

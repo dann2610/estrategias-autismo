@@ -12,7 +12,7 @@ El sitio no incluye nada inventado. Esto es lo que el equipo debe completar o co
 - [ ] **Fundación Sendero Azul**: los datos vienen de un reportaje de Expreso (junio de 2025). Conviene confirmar con la fundación sus programas y su contacto, y cambiar la base de verificación si la fundación entrega documentos.
 - [ ] **Dirección de Inclusión Social de Guayaquil**: la fuente no da direcciones ni requisitos. Hay que conseguirlos.
 - [ ] **Escuelas con programas de inclusión**: todavía no hay ninguna verificada. Solo se deben agregar con un respaldo (por ejemplo, la autorización del Ministerio de Educación o información pública de la escuela).
-- [ ] **Instituciones de Milagro**: buscar servicios locales con respaldo verificable.
+- [ ] **Instituciones del Guayas**: buscar servicios locales con respaldo verificable.
 
 ## Entrevista
 

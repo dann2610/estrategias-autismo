@@ -4,7 +4,7 @@
 
 Un espacio de orientación, recursos y aprendizaje para familias y docentes.
 
-Plataforma web del proyecto de Titulación de la carrera de Comunicación (UNEMI). Está dirigida a familias, cuidadores y docentes de niñas y niños de 3 a 12 años con autismo, en Milagro y la provincia del Guayas.
+Plataforma web del proyecto de Titulación de la carrera de Comunicación (UNEMI). Está dirigida a familias, cuidadores y docentes de niñas y niños de 3 a 12 años con autismo, en la provincia del Guayas.
 
 El contenido es educativo y orientativo. No reemplaza el diagnóstico ni el tratamiento profesional.
 
