@@ -8,7 +8,7 @@ class SecurityHeadersMiddleware:
         "font-src 'self'; "
         "img-src 'self' data:; "
         "connect-src 'self'; "
-        "frame-src https://www.youtube-nocookie.com; "
+        "frame-src https://www.youtube-nocookie.com https://drive.google.com; "
         "frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
     )
 

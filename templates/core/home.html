@@ -112,6 +112,26 @@
   </div>
 </section>
 
+{# ===== Entrevista destacada (video en Google Drive) ===== #}
+<section class="section section-white" aria-labelledby="entrevista-isaac">
+  <div class="container">
+    <div class="interview-feature">
+      <div class="interview-text">
+        <span class="chip chip-area area-3">Entrevista</span>
+        <h2 id="entrevista-isaac" class="mt-2">Conversamos con el Centro Psicoeducativo Integral Isaac</h2>
+        <p class="text-soft">Manuel López Santana conversa con la psicóloga María Lorena Espinoza, del Centro Psicoeducativo Integral Isaac de Guayaquil, que atiende a niñas, niños y jóvenes con autismo. Duración: 18 minutos.</p>
+        <div class="d-flex flex-wrap gap-2">
+          <a class="btn btn-soft btn-sm" href="{% url 'directory:index' %}?q=Isaac">Ver ficha del centro</a>
+          <a class="btn btn-soft btn-sm" href="https://drive.google.com/file/d/1zQvIPKrrnQgR6bisDu3I111bAscPOjZt/view" target="_blank" rel="noopener noreferrer">Abrir el video en Google Drive</a>
+        </div>
+      </div>
+      <div class="interview-video ratio ratio-16x9">
+        <iframe src="https://drive.google.com/file/d/1zQvIPKrrnQgR6bisDu3I111bAscPOjZt/preview" title="Entrevista a la psicóloga María Lorena Espinoza, del Centro Psicoeducativo Integral Isaac" loading="lazy" allow="autoplay; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
 {# ===== Contenidos destacados ===== #}
 {% if capsules %}
 <section class="section section-white" aria-labelledby="destacados">

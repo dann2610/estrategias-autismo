@@ -412,3 +412,10 @@ button.picto-card:hover { border-color: var(--a2); background: var(--a2-mist); }
 .card-actions { position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: .5rem; margin-top: auto; padding-top: .9rem; }
 .share-box { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 1.2rem 1.4rem; }
 .capsule-nav { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: space-between; }
+
+/* Entrevista destacada en el inicio */
+.interview-feature { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+.interview-video { border-radius: var(--radius-lg); overflow: hidden; background: var(--ink); box-shadow: 0 20px 40px -28px rgba(30, 42, 74, .6); }
+.interview-video iframe { border: 0; }
+@media (max-width: 860px) { .interview-feature { grid-template-columns: 1fr; } }
+@media print { .interview-video { display: none !important; } }
